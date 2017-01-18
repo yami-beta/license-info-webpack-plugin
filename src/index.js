@@ -70,10 +70,6 @@ export function generateBanner(modules) {
   return wrapComment(banners.reduce((a, b) => a.concat(b)));
 }
 
-export function removeBasePath(filepath, basePath) {
-  return filepath.replace(`${basePath}${path.sep}`, '');
-}
-
 export default class LicensePack {
   constructor(options) {
     const opts = options || {};
