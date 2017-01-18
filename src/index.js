@@ -12,7 +12,7 @@ export function getLicenseFileByString(pkgPath, licenseFileGlob) {
   return licenseFile;
 }
 
-export function formatPackageInfo(pkg, licenseFileGlob) {
+export function formatPackageInfo(pkg) {
   return {
     name: pkg.name,
     version: pkg.version,
@@ -21,7 +21,6 @@ export function formatPackageInfo(pkg, licenseFileGlob) {
     maintainers: pkg.maintainers,
     contributors: pkg.contributors,
     pkgPath: pkg.pkgPath,
-    licenseFile: getLicenseFileByString(pkg.pkgPath, licenseFileGlob),
   };
 }
 
@@ -93,7 +92,9 @@ export default class LicensePack {
             const pkgPath = getPackagePath(mod.resource);
             const pkg = getPackageJson(pkgPath);
             pkg.pkgPath = pkgPath;
-            return formatPackageInfo(pkg, this.licenseFileGlob);
+            const pkgInfo = formatPackageInfo(pkg);
+            pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.licenseFileGlob);
+            return pkgInfo;
           });
 
           if (!chunk.isInitial()) return;
