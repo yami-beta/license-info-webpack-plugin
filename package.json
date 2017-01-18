@@ -7,7 +7,7 @@
     "watch": "babel -w src -d lib",
     "build": "babel src -d lib",
     "eslint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run build && mocha --compilers js:babel-register"
   },
   "author": "Takahiro Abe",
   "license": "MIT",
@@ -26,9 +26,12 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-env": "^1.1.8",
+    "babel-register": "^6.18.0",
     "eslint": "^3.13.1",
     "eslint-config-airbnb-base": "^11.0.1",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2"
   },
   "dependencies": {
     "glob": "^7.1.1",
