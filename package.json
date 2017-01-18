@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "description": "",
   "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "watch": "babel -w src -d lib",
     "build": "babel src -d lib",
     "eslint": "eslint src",
-    "test": "npm run build && mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register"
   },
   "author": "Takahiro Abe",
   "license": "MIT",

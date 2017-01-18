@@ -1,5 +1,5 @@
 import assert from 'assert';
-import LicensePack, * as Utils from '../src/index';
+import * as Utils from '../src/index';
 
 describe('license-pack', () => {
   it('getLicenseFileByString()', () => {
