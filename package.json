@@ -1,0 +1,37 @@
+{
+  "name": "license-pack",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "watch": "babel -w src -d lib",
+    "build": "babel src -d lib",
+    "eslint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Takahiro Abe",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yami-beta/license-pack.git"
+  },
+  "keywords": [
+    "webpack",
+    "license",
+    "plugin"
+  ],
+  "peerDependencies": {
+    "webpack": "beta"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-env": "^1.1.8",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "dependencies": {
+    "glob": "^7.1.1",
+    "webpack-sources": "^0.1.4"
+  }
+}
