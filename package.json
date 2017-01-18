@@ -24,7 +24,7 @@
     "plugin"
   ],
   "peerDependencies": {
-    "webpack": "beta"
+    "webpack": "^2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
