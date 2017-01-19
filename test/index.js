@@ -3,8 +3,11 @@ import * as Utils from '../src/index';
 
 describe('license-pack', () => {
   it('getLicenseFileByString()', () => {
-    const results = Utils.getLicenseFileByString(`${__dirname}/..`, 'LICENSE');
+    const results = Utils.getLicenseFileByString(`${__dirname}/..`, '{LICENSE,license,License}*');
     assert.equal(results.split(/\n/)[0], 'MIT License');
+
+    const error = Utils.getLicenseFileByString(`${__dirname}/..`, 'license*');
+    assert.equal(error, null);
   });
 
   it('formatPackageInfo()', () => {

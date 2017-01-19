@@ -74,7 +74,7 @@ export default class LicensePack {
   constructor(options) {
     const opts = options || {};
     this.basePath = null;
-    this.licenseFileGlob = opts.glob || '{LICENSE,license}*';
+    this.licenseFileGlob = opts.glob || '{LICENSE,license,License}*';
   }
 
   apply(compiler) {
