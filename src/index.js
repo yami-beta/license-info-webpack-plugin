@@ -30,7 +30,13 @@ export function getPackageJson(packagePath) {
 }
 
 export function getPackagePath(modulePath) {
-  return path.dirname(modulePath);
+  const pathAry = modulePath.split(path.sep);
+  // pathAry: ['', 'dev', 'node_modules', 'foo', 'node_modules', 'bar', 'lib', 'index.js']
+  //                                              |
+  //                                              `-- lastNodeModulesIndex
+  const lastNodeModulesIndex = pathAry.lastIndexOf('node_modules');
+  const pkgPath = pathAry.slice(0, lastNodeModulesIndex + 2).join(path.sep);
+  return pkgPath;
 }
 
 export function filterNodeModules(modules) {

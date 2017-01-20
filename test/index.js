@@ -34,6 +34,7 @@ describe('license-pack', () => {
 
   it('getPackagePath()', () => {
     assert.equal(Utils.getPackagePath('/dev/node_modules/foo/index.js'), '/dev/node_modules/foo');
+    assert.equal(Utils.getPackagePath('/dev/node_modules/foo/lib/index.js'), '/dev/node_modules/foo');
   });
 
   it('filterNodeModules()', () => {
