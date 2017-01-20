@@ -1,5 +1,7 @@
 # license-pack
 
+[![npm version](https://badge.fury.io/js/license-pack.svg)](https://www.npmjs.com/package/license-pack)
+
 `license-pack` is a webpack plugin for making a list of package's LICENSE information, inspired by [licensify](https://github.com/twada/licensify).
 
 ```sh
