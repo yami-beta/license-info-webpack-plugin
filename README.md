@@ -22,6 +22,8 @@ new LicensePack({
 })
 ```
 
+Note: `license-pack` needs `webpack v2.x`
+
 ### Options
 
 - `glob`
