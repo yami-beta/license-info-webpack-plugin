@@ -30,13 +30,18 @@ export function getPackageJson(packagePath) {
 }
 
 export function getPackagePath(modulePath) {
-  const pathAry = modulePath.split(path.sep);
-  // pathAry: ['', 'dev', 'node_modules', 'foo', 'node_modules', 'bar', 'lib', 'index.js']
-  //                                              |
-  //                                              `-- lastNodeModulesIndex
-  const lastNodeModulesIndex = pathAry.lastIndexOf('node_modules');
-  const pkgPath = pathAry.slice(0, lastNodeModulesIndex + 2).join(path.sep);
-  return pkgPath;
+  const modulePathAry = modulePath.split(path.sep);
+  // ['', 'dev', 'node_modules', 'foo', 'node_modules', 'bar', 'lib', 'index.js']
+  //                                     |
+  //                                     `-- lastNodeModulesIndex
+  const lastNodeModulesIndex = modulePathAry.lastIndexOf('node_modules');
+  let pkgDirIndexfromNodeModules = 2;
+  if (modulePathAry[lastNodeModulesIndex + 1].startsWith('@')) {
+    // check scoped modules
+    pkgDirIndexfromNodeModules += 1;
+  }
+  const pkgPathAry = modulePathAry.slice(0, lastNodeModulesIndex + pkgDirIndexfromNodeModules);
+  return pkgPathAry.join(path.sep);
 }
 
 export function filterNodeModules(modules) {
