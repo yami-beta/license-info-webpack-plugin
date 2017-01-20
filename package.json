@@ -10,7 +10,8 @@
     "watch": "babel -w src -d lib",
     "build": "babel src -d lib",
     "eslint": "eslint src",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register",
+    "version": "npm run build"
   },
   "author": "Takahiro Abe",
   "license": "MIT",
