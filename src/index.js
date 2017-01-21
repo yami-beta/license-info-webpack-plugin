@@ -114,11 +114,8 @@ export default class LicensePack {
       output: 'banner',
       outputPath: './',
     };
-    const opts = Object.assign({}, defaultOptions, options);
+    this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
-    this.licenseFileGlob = opts.glob;
-    this.output = opts.output;
-    this.outputPath = opts.outputPath;
   }
 
   apply(compiler) {
@@ -133,14 +130,14 @@ export default class LicensePack {
             const pkg = getPackageJson(pkgPath);
             pkg.pkgPath = pkgPath;
             const pkgInfo = formatPackageInfo(pkg);
-            pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.licenseFileGlob);
+            pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.opts.glob);
             return pkgInfo;
           });
 
           if (!chunk.isInitial()) return;
 
-          if (this.output === 'html') {
-            const filepath = path.join(this.outputPath, `license-${chunk.name}.html`);
+          if (this.opts.output === 'html') {
+            const filepath = path.join(this.opts.outputPath, `license-${chunk.name}.html`);
             fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
           } else {
             chunk.files.forEach((filename) => {
