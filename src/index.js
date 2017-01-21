@@ -113,12 +113,14 @@ export default class LicensePack {
   constructor(options) {
     const defaultOptions = {
       glob: '{LICENSE,license,License}*',
-      outputFile: false,
+      output: 'banner',
+      outputPath: './',
     };
     const opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
     this.licenseFileGlob = opts.glob;
-    this.outputFile = opts.outputFile;
+    this.output = opts.output;
+    this.outputPath = opts.outputPath;
   }
 
   apply(compiler) {
@@ -139,7 +141,7 @@ export default class LicensePack {
 
           if (!chunk.isInitial()) return;
 
-          if (this.outputFile) {
+          if (this.output === 'file') {
             console.log(generateHtml(pkgList).join("\n"));
           } else {
             chunk.files.forEach((filename) => {
