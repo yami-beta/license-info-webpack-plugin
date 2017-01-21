@@ -81,14 +81,44 @@ export function generateBanner(modules) {
   return banners;
 }
 
+export function generateHtml(modules, filepath) {
+  const banners = generateBanner(modules);
+  const licenseFileIndex = 4;
+  const htmlAry = modules.map((pkg) => {
+    let licenseStr = '';
+    if (pkg.licenseFile) {
+      licenseStr = pkg.licenseFile;
+    } else {
+      licenseStr = 'LICENSE file is not exist';
+    }
+
+    let author = pkg.author;
+    if (typeof author === 'object') {
+      author = `${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
+    }
+    const copyright = `Copyright (c) ${author}. All rights reserved.`;
+
+    return `
+<h3>${pkg.name}@${pkg.version} (${pkg.license})</h3>
+<p>${copyright}</p>
+<blockquote>
+  <pre>${licenseStr}</pre>
+</blockquote>
+`;
+  });
+  return htmlAry;
+}
+
 export default class LicensePack {
   constructor(options) {
     const defaultOptions = {
       glob: '{LICENSE,license,License}*',
+      outputFile: false,
     };
     const opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
     this.licenseFileGlob = opts.glob;
+    this.outputFile = opts.outputFile;
   }
 
   apply(compiler) {
@@ -109,12 +139,16 @@ export default class LicensePack {
 
           if (!chunk.isInitial()) return;
 
-          chunk.files.forEach((filename) => {
-            const banner = generateBanner(pkgList);
-            compilation.assets[filename] = new ConcatSource(
-              wrapComment(banner.reduce((a, b) => a.concat(b))),
-              compilation.assets[filename]);
-          });
+          if (this.outputFile) {
+            console.log(generateHtml(pkgList).join("\n"));
+          } else {
+            chunk.files.forEach((filename) => {
+              const banner = generateBanner(pkgList);
+              compilation.assets[filename] = new ConcatSource(
+                wrapComment(banner.reduce((a, b) => a.concat(b))),
+                compilation.assets[filename]);
+            });
+          }
         });
 
         callback();

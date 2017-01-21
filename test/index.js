@@ -83,4 +83,31 @@ describe('license-pack', () => {
       i++;
     });
   });
+
+  it('generateHtml()', () => {
+    const pkg = {
+      name: 'name',
+      version: '1.0.0',
+      author: 'author',
+      license: 'MIT',
+      licenseFile: `MIT License
+
+Copyright (c) 2016 yami_beta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy`,
+    };
+    const results = Utils.generateHtml([pkg]);
+    const expected = `
+<h3>name@1.0.0 (MIT)</h3>
+<p>Copyright (c) author. All rights reserved.</p>
+<blockquote>
+  <pre>MIT License
+
+Copyright (c) 2016 yami_beta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy</pre>
+</blockquote>
+`;
+    assert.equal(results[0], expected);
+  });
 });
