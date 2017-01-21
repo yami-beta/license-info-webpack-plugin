@@ -17,9 +17,18 @@ $ yarn add --dev license-pack
 ```js
 const LicensePack = require('license-pack').default;
 
-new LicensePack({
-  glob: '{LICENSE,license,License}*'
-})
+module.exports = {
+  entry: './src/js/index.js',
+  output: {
+    path: path.join(__dirname, 'dist/js'),
+    filename: '[name].js'
+  },
+  plugins: [
+    new LicensePack({
+      glob: '{LICENSE,license,License}*'
+    })
+  ]
+};
 ```
 
 Note: `license-pack` needs `webpack v2.x`
@@ -27,8 +36,18 @@ Note: `license-pack` needs `webpack v2.x`
 ### Options
 
 - `glob`
-    - glob pattern for LICENSE file
-    - default: `'{LICENSE,license,License}*'`
+    - Glob pattern for LICENSE file
+    - Default: `'{LICENSE,license,License}*'`
+- `output`
+    - Output type: `'banner'` or `'html'`
+        - `'banner'`: Append comment to top of bundled code
+        - `'html'`: Generate html
+    - Default: `'banner'`
+- `outputPath`
+    - Output path for generated html
+    - If `outputPath` is `'./'`, `./license-[name].html` are generated
+    - This option is enabled if `output: 'html'` is set.
+    - Default: `'./'`
 
 # LICENSE
 
