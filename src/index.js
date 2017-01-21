@@ -49,8 +49,8 @@ export function filterNodeModules(modules) {
 }
 
 export function wrapComment(lines) {
-  const indent = '   ';
-  return `/*!\n${lines.map(line => `${indent}${line}`).join('\n')}\n */\n`;
+  const indent = ' * ';
+  return `/**\n${lines.map(line => `${indent}${line}`).join('\n')}\n */\n`;
 }
 
 export function generateBanner(modules) {

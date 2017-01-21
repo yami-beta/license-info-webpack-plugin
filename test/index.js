@@ -52,8 +52,8 @@ describe('license-pack', () => {
   });
 
   it('wrapComment()', () => {
-    const expected = `/*!
-   foo
+    const expected = `/**
+ * foo
  */
 `;
     assert.equal(Utils.wrapComment(['foo']), expected);
