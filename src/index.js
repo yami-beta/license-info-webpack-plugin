@@ -78,14 +78,17 @@ export function generateBanner(modules) {
     banner = banner.concat(['', '']);
     return banner;
   });
-  return wrapComment(banners.reduce((a, b) => a.concat(b)));
+  return banners;
 }
 
 export default class LicensePack {
   constructor(options) {
-    const opts = options || {};
+    const defaultOptions = {
+      glob: '{LICENSE,license,License}*',
+    };
+    const opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
-    this.licenseFileGlob = opts.glob || '{LICENSE,license,License}*';
+    this.licenseFileGlob = opts.glob;
   }
 
   apply(compiler) {
@@ -105,9 +108,11 @@ export default class LicensePack {
           });
 
           if (!chunk.isInitial()) return;
+
           chunk.files.forEach((filename) => {
+            const banner = generateBanner(pkgList);
             compilation.assets[filename] = new ConcatSource(
-              generateBanner(pkgList),
+              wrapComment(banner.reduce((a, b) => a.concat(b))),
               compilation.assets[filename]);
           });
         });

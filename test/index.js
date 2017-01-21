@@ -66,17 +66,21 @@ describe('license-pack', () => {
       author: 'author',
       license: 'MIT',
     };
-    const expected = `/*!
-   ${pkg.name}@${pkg.version} (${pkg.license})
-   
-     Copyright (c) ${pkg.author}. All rights reserved.
-   
-     LICENSE file is not exist
-   
-   
- */
-`;
+    const expected = [[
+      'name@1.0.0 (MIT)',
+      '',
+      '  Copyright (c) author. All rights reserved.',
+      '',
+      '  LICENSE file is not exist',
+      '',
+      ''
+    ]];
     const results = Utils.generateBanner([pkg]);
-    assert.equal(results, expected);
-  })
+    assert.equal(results[0].length, 7);
+    let i = 0;
+    results[0].forEach((resultLine) => {
+      assert.equal(resultLine, expected[0][i]);
+      i++;
+    });
+  });
 });
