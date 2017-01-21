@@ -81,9 +81,7 @@ export function generateBanner(modules) {
   return banners;
 }
 
-export function generateHtml(modules, filepath) {
-  const banners = generateBanner(modules);
-  const licenseFileIndex = 4;
+export function generateHtml(modules) {
   const htmlAry = modules.map((pkg) => {
     let licenseStr = '';
     if (pkg.licenseFile) {
@@ -141,8 +139,9 @@ export default class LicensePack {
 
           if (!chunk.isInitial()) return;
 
-          if (this.output === 'file') {
-            console.log(generateHtml(pkgList).join("\n"));
+          if (this.output === 'html') {
+            const filepath = path.join(this.outputPath, `license-${chunk.name}.html`);
+            fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
           } else {
             chunk.files.forEach((filename) => {
               const banner = generateBanner(pkgList);
