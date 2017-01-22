@@ -48,18 +48,15 @@ export function filterNodeModules(modules) {
   return modules.filter(mod => mod.resource.includes('node_modules'));
 }
 
-export function wrapComment(lines) {
-  const indent = ' * ';
-  return `/**\n${lines.map(line => `${indent}${line}`).join('\n')}\n */\n`;
-}
-
 export function generateBanner(modules) {
+  const indent = ' *';
   const banners = modules.map((pkg) => {
-    let licenseAry = [];
+    let licenseStr = `${indent}   LICENSE file is not exist`;
     if (pkg.licenseFile) {
-      licenseAry = pkg.licenseFile.split(/\n/).map(line => `  ${line}`);
-    } else {
-      licenseAry = ['  LICENSE file is not exist'];
+      licenseStr = pkg.licenseFile.split(/\n/).map(line => {
+        if (line === '') return indent;
+        return `${indent}   ${line}`
+      }).join('\n');
     }
 
     let author = pkg.author;
@@ -68,17 +65,18 @@ export function generateBanner(modules) {
     }
     const copyright = `  Copyright (c) ${author}. All rights reserved.`;
 
-    let banner = [
-      `${pkg.name}@${pkg.version} (${pkg.license})`,
-      '',
-      `${copyright}`,
-      '',
-    ];
-    banner = banner.concat(licenseAry);
-    banner = banner.concat(['', '']);
-    return banner;
+    return `${indent} ${pkg.name}@${pkg.version} (${pkg.license})
+${indent}
+${indent} ${copyright}
+${indent}
+${licenseStr}
+${indent}
+${indent}`;
   });
-  return banners;
+  return `/**
+${banners.join('\n')}
+ */
+`;
 }
 
 export function generateHtml(modules) {
@@ -141,9 +139,8 @@ export default class LicensePack {
             fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
           } else {
             chunk.files.forEach((filename) => {
-              const banner = generateBanner(pkgList);
               compilation.assets[filename] = new ConcatSource(
-                wrapComment(banner.reduce((a, b) => a.concat(b))),
+                generateBanner(pkgList),
                 compilation.assets[filename]);
             });
           }

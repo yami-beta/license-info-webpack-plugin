@@ -51,14 +51,6 @@ describe('license-pack', () => {
     assert.equal(results[1], modules[2]);
   });
 
-  it('wrapComment()', () => {
-    const expected = `/**
- * foo
- */
-`;
-    assert.equal(Utils.wrapComment(['foo']), expected);
-  });
-
   it('generateBanner()', () => {
     const pkg = {
       name: 'name',
@@ -66,18 +58,18 @@ describe('license-pack', () => {
       author: 'author',
       license: 'MIT',
     };
-    const expected = [
-      'name@1.0.0 (MIT)',
-      '',
-      '  Copyright (c) author. All rights reserved.',
-      '',
-      '  LICENSE file is not exist',
-      '',
-      ''
-    ];
-    const results = Utils.generateBanner([pkg])[0];
-    assert.equal(results.length, 7);
-    assert.deepEqual(results, expected);
+    const expected = `/**
+ * name@1.0.0 (MIT)
+ *
+ *   Copyright (c) author. All rights reserved.
+ *
+ *   LICENSE file is not exist
+ *
+ *
+ */
+`;
+    const results = Utils.generateBanner([pkg]);
+    assert.equal(results, expected);
   });
 
   it('generateHtml()', () => {
