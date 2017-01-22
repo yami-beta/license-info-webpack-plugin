@@ -60,7 +60,6 @@ describe('license-pack', () => {
     };
     const expected = `/**
  * name@1.0.0 (MIT)
- *
  *   Copyright (c) author. All rights reserved.
  *
  *   LICENSE file is not exist

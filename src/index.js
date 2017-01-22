@@ -66,7 +66,6 @@ export function generateBanner(modules) {
     const copyright = `  Copyright (c) ${author}. All rights reserved.`;
 
     return `${indent} ${pkg.name}@${pkg.version} (${pkg.license})
-${indent}
 ${indent} ${copyright}
 ${indent}
 ${licenseStr}
