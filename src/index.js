@@ -53,9 +53,9 @@ export function generateBanner(modules) {
   const banners = modules.map((pkg) => {
     let licenseStr = `${indent}   LICENSE file is not exist`;
     if (pkg.licenseFile) {
-      licenseStr = pkg.licenseFile.split(/\n/).map(line => {
+      licenseStr = pkg.licenseFile.split(/\n/).map((line) => {
         if (line === '') return indent;
-        return `${indent}   ${line}`
+        return `${indent}   ${line}`;
       }).join('\n');
     }
 
