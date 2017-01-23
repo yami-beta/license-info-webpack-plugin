@@ -133,15 +133,19 @@ export default class LicensePack {
 
           if (!chunk.isInitial()) return;
 
-          if (this.opts.output === 'html') {
-            const filepath = path.join(this.opts.outputPath, `license-${chunk.name}.html`);
-            fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
-          } else {
-            chunk.files.forEach((filename) => {
-              compilation.assets[filename] = new ConcatSource(
-                generateBanner(pkgList),
-                compilation.assets[filename]);
-            });
+          switch (this.opts.output) {
+            case 'html': {
+              const filepath = path.join(this.opts.outputPath, `license-${chunk.name}.html`);
+              fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
+              break;
+            }
+            case 'banner':
+            default:
+              chunk.files.forEach((filename) => {
+                compilation.assets[filename] = new ConcatSource(
+                  generateBanner(pkgList),
+                  compilation.assets[filename]);
+              });
           }
         });
 
