@@ -32,7 +32,6 @@ export function getPackageJson(packagePath) {
 export function getPackagePath(modulePath) {
   const modulePathAry = modulePath.split(path.sep);
   // ['', 'dev', 'node_modules', 'foo', 'node_modules', 'bar', 'lib', 'index.js']
-  //                                     |
   //                                     `-- lastNodeModulesIndex
   const lastNodeModulesIndex = modulePathAry.lastIndexOf('node_modules');
   let pkgDirIndexfromNodeModules = 2;
