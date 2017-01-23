@@ -138,13 +138,13 @@ export default class LicensePack {
               fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
               break;
             }
-            case 'banner':
-            default:
+            default: {
               chunk.files.forEach((filename) => {
                 compilation.assets[filename] = new ConcatSource(
                   generateBanner(pkgList),
                   compilation.assets[filename]);
               });
+            }
           }
         });
 
