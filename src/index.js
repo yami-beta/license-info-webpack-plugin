@@ -72,7 +72,7 @@ ${licenseStr}
 ${indent}
 ${indent}`;
   });
-  return `/**
+  return `/*!
 ${banners.join('\n')}
  */
 `;

@@ -58,7 +58,7 @@ describe('license-pack', () => {
       author: 'author',
       license: 'MIT',
     };
-    const expected = `/**
+    const expected = `/*!
  * name@1.0.0 (MIT)
  *   Copyright (c) author. All rights reserved.
  *
