@@ -50,7 +50,7 @@ export function filterNodeModules(modules) {
 export function generateBanner(modules) {
   const indent = ' *';
   const banners = modules.map((pkg) => {
-    let licenseStr = `${indent}   LICENSE file is not exist`;
+    let licenseStr = `${indent}`;
     if (pkg.licenseFile) {
       licenseStr = pkg.licenseFile.split(/\n/).map((line) => {
         if (line === '') return indent;
@@ -82,8 +82,6 @@ export function generateHtml(modules) {
     let licenseStr = '';
     if (pkg.licenseFile) {
       licenseStr = pkg.licenseFile;
-    } else {
-      licenseStr = 'LICENSE file is not exist';
     }
 
     let author = pkg.author;
@@ -109,6 +107,7 @@ export default class LicensePack {
       glob: '{LICENSE,license,License}*',
       output: 'banner',
       outputPath: './',
+      includeLicenseFile: false,
     };
     this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
@@ -126,7 +125,11 @@ export default class LicensePack {
             const pkg = getPackageJson(pkgPath);
             pkg.pkgPath = pkgPath;
             const pkgInfo = formatPackageInfo(pkg);
-            pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.opts.glob);
+            if (this.opts.includeLicenseFile) {
+              pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.opts.glob);
+            } else {
+              pkgInfo.licenseFile = null;
+            }
             return pkgInfo;
           });
 

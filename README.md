@@ -31,7 +31,7 @@ module.exports = {
 };
 ```
 
-Note: `license-pack` needs `webpack v2.x`
+Note: `license-pack` needs `webpack v2.0 or above`
 
 ### Options
 
@@ -48,6 +48,8 @@ Note: `license-pack` needs `webpack v2.x`
     - If `outputPath` is `'./'`, `./license-[name].html` are generated
     - This option is enabled if `output: 'html'` is set.
     - Default: `'./'`
+- `includeLicenseFile`
+    - Include and put LICENSE file
 
 # LICENSE
 

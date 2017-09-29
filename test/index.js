@@ -51,7 +51,7 @@ describe('license-pack', () => {
     assert.equal(results[1], modules[2]);
   });
 
-  it('generateBanner()', () => {
+  it('generateBanner() without license file', () => {
     const pkg = {
       name: 'name',
       version: '1.0.0',
@@ -62,7 +62,7 @@ describe('license-pack', () => {
  * name@1.0.0 (MIT)
  *   Copyright (c) author. All rights reserved.
  *
- *   LICENSE file is not exist
+ *
  *
  *
  */
@@ -71,7 +71,54 @@ describe('license-pack', () => {
     assert.equal(results, expected);
   });
 
-  it('generateHtml()', () => {
+  it('generateBanner() with license file', () => {
+    const pkg = {
+      name: 'name',
+      version: '1.0.0',
+      author: 'author',
+      license: 'MIT',
+      licenseFile: `MIT License
+
+Copyright (c) 2016 yami_beta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy`,
+    };
+    const expected = `/*!
+ * name@1.0.0 (MIT)
+ *   Copyright (c) author. All rights reserved.
+ *
+ *   MIT License
+ *
+ *   Copyright (c) 2016 yami_beta
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *
+ *
+ */
+`;
+    const results = Utils.generateBanner([pkg]);
+    assert.equal(results, expected);
+  });
+
+  it('generateHtml() without license file', () => {
+    const pkg = {
+      name: 'name',
+      version: '1.0.0',
+      author: 'author',
+      license: 'MIT',
+    };
+    const results = Utils.generateHtml([pkg]);
+    const expected = `
+<h3>name@1.0.0 (MIT)</h3>
+<p>Copyright (c) author. All rights reserved.</p>
+<blockquote>
+  <pre></pre>
+</blockquote>
+`;
+    assert.equal(results[0], expected);
+  });
+
+  it('generateHtml() with license file', () => {
     const pkg = {
       name: 'name',
       version: '1.0.0',
