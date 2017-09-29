@@ -66,6 +66,30 @@ export function generateBanner(modules) {
       licenseStr = `${indent}`;
     }
 
+    let pkgInfoText = '';
+    if (pkg.author) {
+      switch (typeof pkg.author) {
+        case 'object': {
+          pkgInfoText += `\n${indent}   author: ${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
+          break;
+        }
+        case 'string': {
+          pkgInfoText += `\n${indent}   author: ${pkg.author}`;
+          break;
+        }
+      }
+    }
+    if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
+      pkgInfoText += `\n${indent}   maintainers:`;
+      const maintainers = pkg.maintainers.join(`\n${indent}     `);
+      pkgInfoText += `\n${indent}     ${maintainers}`;
+    }
+    if (pkg.contributors && Array.isArray(pkg.contributors)) {
+      pkgInfoText += `\n${indent}   contributors:`;
+      const contributors = pkg.contributors.join(`\n${indent}     `);
+      pkgInfoText += `\n${indent}     ${contributors}`;
+    }
+
     let author = pkg.author;
     if (typeof author === 'object') {
       author = `${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
@@ -73,7 +97,7 @@ export function generateBanner(modules) {
     const copyright = `  Copyright (c) ${author}. All rights reserved.`;
 
     return `${indent} ${pkg.name}@${pkg.version} (${pkg.license})
-${indent} ${copyright}
+${pkgInfoText === '' ? `${indent}` : ` ${pkgInfoText.trim()}`}
 ${licenseStr}
 ${indent}`;
   });
@@ -91,6 +115,39 @@ export function generateHtml(modules) {
       licenseStr = pkg.licenseFile;
     }
 
+    let pkgInfoText = '';
+    if (pkg.author) {
+      switch (typeof pkg.author) {
+        case 'object': {
+          pkgInfoText += `\n<p>author: ${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}</p>`;
+          break;
+        }
+        case 'string': {
+          pkgInfoText += `\n<p>author: ${pkg.author}</p>`;
+          break;
+        }
+      }
+    }
+    if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
+      pkgInfoText += `
+<p>maintainers:</p>
+<ul>`;
+      pkg.maintainers.forEach((maintainer) => {
+        pkgInfoText += `<li>${maintainer}</li>`
+      });
+      pkgInfoText += `</ul>`;
+    }
+    if (pkg.contributors && Array.isArray(pkg.contributors)) {
+      pkgInfoText += `
+<p>contributors:</p>
+<ul>`;
+      pkg.contributors.forEach((contributor) => {
+        pkgInfoText += `<li>${contributor}</li>`;
+      });
+      pkgInfoText += `</ul>`;
+    }
+
+
     let author = pkg.author;
     if (typeof author === 'object') {
       author = `${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
@@ -99,7 +156,7 @@ export function generateHtml(modules) {
 
     return `
 <h3>${pkg.name}@${pkg.version} (${pkg.license})</h3>
-<p>${copyright}</p>
+${pkgInfoText.trim()}
 <blockquote>
   <pre>${licenseStr}</pre>
 </blockquote>

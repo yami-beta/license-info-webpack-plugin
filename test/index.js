@@ -56,11 +56,19 @@ describe('license-pack', () => {
       name: 'name',
       version: '1.0.0',
       author: 'author',
+      maintainers: ['maintainer1', 'maintainer2'],
+      contributors: ['contributor1', 'contributor2'],
       license: 'MIT',
     };
     const expected = `/*!
  * name@1.0.0 (MIT)
- *   Copyright (c) author. All rights reserved.
+ *   author: author
+ *   maintainers:
+ *     maintainer1
+ *     maintainer2
+ *   contributors:
+ *     contributor1
+ *     contributor2
  *
  *
  */
@@ -74,6 +82,8 @@ describe('license-pack', () => {
       name: 'name',
       version: '1.0.0',
       author: 'author',
+      maintainers: ['maintainer1', 'maintainer2'],
+      contributors: ['contributor1', 'contributor2'],
       license: 'MIT',
       licenseFile: `MIT License
 
@@ -83,7 +93,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     };
     const expected = `/*!
  * name@1.0.0 (MIT)
- *   Copyright (c) author. All rights reserved.
+ *   author: author
+ *   maintainers:
+ *     maintainer1
+ *     maintainer2
+ *   contributors:
+ *     contributor1
+ *     contributor2
  *
  *   MIT License
  *
@@ -103,12 +119,18 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
       name: 'name',
       version: '1.0.0',
       author: 'author',
+      maintainers: ['maintainer1', 'maintainer2'],
+      contributors: ['contributor1', 'contributor2'],
       license: 'MIT',
     };
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
-<p>Copyright (c) author. All rights reserved.</p>
+<p>author: author</p>
+<p>maintainers:</p>
+<ul><li>maintainer1</li><li>maintainer2</li></ul>
+<p>contributors:</p>
+<ul><li>contributor1</li><li>contributor2</li></ul>
 <blockquote>
   <pre></pre>
 </blockquote>
@@ -121,6 +143,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
       name: 'name',
       version: '1.0.0',
       author: 'author',
+      maintainers: ['maintainer1', 'maintainer2'],
+      contributors: ['contributor1', 'contributor2'],
       license: 'MIT',
       licenseFile: `MIT License
 
@@ -131,7 +155,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
-<p>Copyright (c) author. All rights reserved.</p>
+<p>author: author</p>
+<p>maintainers:</p>
+<ul><li>maintainer1</li><li>maintainer2</li></ul>
+<p>contributors:</p>
+<ul><li>contributor1</li><li>contributor2</li></ul>
 <blockquote>
   <pre>MIT License
 
