@@ -147,12 +147,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
-<p>author: author</p>
-<p>url: https://github.com/yami-beta/license-pack</p>
-<p>maintainers:</p>
-<ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
-<p>contributors:</p>
-<ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul>
+<dl>
+<dt>author</dt>
+<dd>author</dd>
+<dt>url</dt>
+<dd>https://github.com/yami-beta/license-pack</dd>
+<dt>maintainers</dt>
+<dd><ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul></dd>
+<dt>contributors</dt>
+<dd><ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul></dd>
+</dl>
 <blockquote>
   <pre></pre>
 </blockquote>
@@ -165,12 +169,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
-<p>author: author</p>
-<p>url: https://github.com/yami-beta/license-pack</p>
-<p>maintainers:</p>
-<ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
-<p>contributors:</p>
-<ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul>
+<dl>
+<dt>author</dt>
+<dd>author</dd>
+<dt>url</dt>
+<dd>https://github.com/yami-beta/license-pack</dd>
+<dt>maintainers</dt>
+<dd><ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul></dd>
+<dt>contributors</dt>
+<dd><ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul></dd>
+</dl>
 <blockquote>
   <pre>MIT License
 

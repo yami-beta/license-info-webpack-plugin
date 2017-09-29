@@ -142,35 +142,37 @@ export function generateHtml(modules) {
       licenseStr = pkg.licenseFile;
     }
 
-    let pkgInfoText = '';
+    let pkgInfoText = '<dl>';
     if (pkg.author) {
+      pkgInfoText += '\n<dt>author</dt>';
       switch (typeof pkg.author) {
         case 'object': {
-          pkgInfoText += `\n<p>author: ${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}</p>`;
+          pkgInfoText += `\n<dd>${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}</dd>`;
           break;
         }
         case 'string': {
-          pkgInfoText += `\n<p>author: ${pkg.author}</p>`;
+          pkgInfoText += `\n<dd>${pkg.author}</dd>`;
           break;
         }
       }
     }
     if (pkg.repository) {
+      pkgInfoText += '\n<dt>url</dt>';
       switch (typeof pkg.repository) {
         case 'object': {
-          pkgInfoText += `\n<p>url: ${pkg.repository.url}</p>`;
+          pkgInfoText += `\n<dd>${pkg.repository.url}</dd>`;
           break;
         }
         case 'string': {
-          pkgInfoText += `\n<p>url: ${pkg.repository}</p>`;
+          pkgInfoText += `\n<dd>${pkg.repository}</dd>`;
           break;
         }
       }
     }
     if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
       pkgInfoText += `
-<p>maintainers:</p>
-<ul>`;
+<dt>maintainers</dt>
+<dd><ul>`;
       pkg.maintainers.forEach((m) => {
         switch (typeof m) {
           case 'object': {
@@ -183,12 +185,12 @@ export function generateHtml(modules) {
           }
         }
       });
-      pkgInfoText += `</ul>`;
+      pkgInfoText += `</ul></dd>`;
     }
     if (pkg.contributors && Array.isArray(pkg.contributors)) {
       pkgInfoText += `
-<p>contributors:</p>
-<ul>`;
+<dt>contributors</dt>
+<dd><ul>`;
       pkg.contributors.forEach((c) => {
         switch (typeof c) {
           case 'object': {
@@ -201,8 +203,9 @@ export function generateHtml(modules) {
           }
         }
       });
-      pkgInfoText += `</ul>`;
+      pkgInfoText += `</ul></dd>`;
     }
+    pkgInfoText += '\n</dl>';
 
     return `
 <h3>${pkg.name}@${pkg.version} (${pkg.license})</h3>
