@@ -44,18 +44,26 @@ export function getPackagePath(modulePath) {
 }
 
 export function filterNodeModules(modules) {
-  return modules.filter(mod => mod.resource.includes('node_modules'));
+  return modules.filter(mod => {
+    if (!mod.resource) return false;
+    return mod.resource.includes('node_modules')
+  });
 }
 
 export function generateBanner(modules) {
   const indent = ' *';
-  const banners = modules.map((pkg) => {
+  const banners = Object.keys(modules).map((pkgId) => {
+    const pkg = modules[pkgId];
     let licenseStr = `${indent}`;
     if (pkg.licenseFile) {
-      licenseStr = pkg.licenseFile.split(/\n/).map((line) => {
+      licenseStr = `${indent}\n`;
+      licenseStr += pkg.licenseFile.split(/\n/).map((line) => {
         if (line === '') return indent;
         return `${indent}   ${line}`;
       }).join('\n');
+      licenseStr += `\n${indent}`;
+    } else {
+      licenseStr = `${indent}`;
     }
 
     let author = pkg.author;
@@ -66,9 +74,7 @@ export function generateBanner(modules) {
 
     return `${indent} ${pkg.name}@${pkg.version} (${pkg.license})
 ${indent} ${copyright}
-${indent}
 ${licenseStr}
-${indent}
 ${indent}`;
   });
   return `/*!
@@ -78,7 +84,8 @@ ${banners.join('\n')}
 }
 
 export function generateHtml(modules) {
-  const htmlAry = modules.map((pkg) => {
+  const htmlAry = Object.keys(modules).map((pkgId) => {
+    const pkg = modules[pkgId];
     let licenseStr = '';
     if (pkg.licenseFile) {
       licenseStr = pkg.licenseFile;
@@ -107,7 +114,7 @@ export default class LicensePack {
       glob: '{LICENSE,license,License}*',
       output: 'banner',
       outputPath: './',
-      includeLicenseFile: false,
+      includeLicenseFile: true,
     };
     this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
@@ -119,7 +126,8 @@ export default class LicensePack {
     compiler.plugin('compilation', (compilation) => {
       compilation.plugin('optimize-chunk-assets', (chunks, callback) => {
         chunks.forEach((chunk) => {
-          const modules = filterNodeModules(chunk.modules);
+          // chunk.modules are deprecated from webpack v3.x
+          const modules = filterNodeModules(chunk.mapModules(mod => mod));
           const pkgList = modules.map((mod) => {
             const pkgPath = getPackagePath(mod.resource);
             const pkg = getPackageJson(pkgPath);
@@ -132,19 +140,24 @@ export default class LicensePack {
             }
             return pkgInfo;
           });
+          let uniquePkgList = {};
+          pkgList.forEach((pkg) => {
+            if (uniquePkgList[`${pkg.name}@${pkg.version}`]) return;
+            uniquePkgList[`${pkg.name}@${pkg.version}`] = pkg;
+          });
 
           if (!chunk.isInitial()) return;
 
           switch (this.opts.output) {
             case 'html': {
               const filepath = path.join(this.opts.outputPath, `license-${chunk.name}.html`);
-              fs.writeFileSync(filepath, generateHtml(pkgList).join('\n'), 'utf-8');
+              fs.writeFileSync(filepath, generateHtml(uniquePkgList).join('\n'), 'utf-8');
               break;
             }
             default: {
               chunk.files.forEach((filename) => {
                 compilation.assets[filename] = new ConcatSource(
-                  generateBanner(pkgList),
+                  generateBanner(uniquePkgList),
                   compilation.assets[filename]);
               });
             }

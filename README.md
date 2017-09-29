@@ -31,7 +31,7 @@ module.exports = {
 };
 ```
 
-Note: `license-pack` needs `webpack v2.0 or above`
+Note: `license-pack` needs `webpack v3.0 or above`
 
 ### Options
 
@@ -50,6 +50,7 @@ Note: `license-pack` needs `webpack v2.0 or above`
     - Default: `'./'`
 - `includeLicenseFile`
     - Include and put LICENSE file
+    - Default: `true`
 
 # LICENSE
 

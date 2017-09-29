@@ -63,11 +63,9 @@ describe('license-pack', () => {
  *   Copyright (c) author. All rights reserved.
  *
  *
- *
- *
  */
 `;
-    const results = Utils.generateBanner([pkg]);
+    const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
     assert.equal(results, expected);
   });
 
@@ -96,7 +94,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  *
  */
 `;
-    const results = Utils.generateBanner([pkg]);
+    const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
     assert.equal(results, expected);
   });
 
@@ -107,7 +105,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
       author: 'author',
       license: 'MIT',
     };
-    const results = Utils.generateHtml([pkg]);
+    const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
 <p>Copyright (c) author. All rights reserved.</p>
@@ -130,7 +128,7 @@ Copyright (c) 2016 yami_beta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy`,
     };
-    const results = Utils.generateHtml([pkg]);
+    const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
 <p>Copyright (c) author. All rights reserved.</p>
