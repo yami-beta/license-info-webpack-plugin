@@ -18,11 +18,12 @@ describe('license-pack', () => {
       license: 'license',
       maintainers: 'maintainers',
       contributors: 'contributors',
+      repository: 'repository',
       pkgPath: 'pkgPath',
       removed: 'removed',
     };
     const results = Utils.formatPackageInfo(target);
-    assert.equal(Object.keys(results).length, 7);
+    assert.equal(Object.keys(results).length, 8);
     assert.equal(results.removed, undefined);
   });
 
@@ -51,24 +52,56 @@ describe('license-pack', () => {
     assert.equal(results[1], modules[2]);
   });
 
+  /**
+   * Generate LICENSE tests
+   */
+  const withoutLicensePkg = {
+    name: 'name',
+    version: '1.0.0',
+    author: 'author',
+    repository: {
+      "type": "git",
+      "url": "https://github.com/yami-beta/license-pack",
+    },
+    maintainers: [
+      { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+      { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+    ],
+    contributors: [
+      { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+      { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+    ],
+    license: 'MIT',
+  };
+  const withLicensePkg = {
+    name: 'name',
+    version: '1.0.0',
+    author: 'author',
+    repository: {
+      "type": "git",
+      "url": "https://github.com/yami-beta/license-pack",
+    },
+    maintainers: [
+      { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+      { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+    ],
+    contributors: [
+      { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+      { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+    ],
+    license: 'MIT',
+    licenseFile: `MIT License
+
+Copyright (c) 2016 yami_beta
+
+Permission is hereby granted, free of charge, to any person obtaining a copy`,
+  };
   it('generateBanner() without license file', () => {
-    const pkg = {
-      name: 'name',
-      version: '1.0.0',
-      author: 'author',
-      maintainers: [
-        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
-      ],
-      contributors: [
-        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
-      ],
-      license: 'MIT',
-    };
+    const pkg = withoutLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
  *   author: author
+ *   url: https://github.com/yami-beta/license-pack
  *   maintainers:
  *     m1 <m1@example.com> (m1.example.com)
  *     m2 <m2@example.com> (m2.example.com)
@@ -84,28 +117,11 @@ describe('license-pack', () => {
   });
 
   it('generateBanner() with license file', () => {
-    const pkg = {
-      name: 'name',
-      version: '1.0.0',
-      author: 'author',
-      maintainers: [
-        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
-      ],
-      contributors: [
-        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
-      ],
-      license: 'MIT',
-      licenseFile: `MIT License
-
-Copyright (c) 2016 yami_beta
-
-Permission is hereby granted, free of charge, to any person obtaining a copy`,
-    };
+    const pkg = withLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
  *   author: author
+ *   url: https://github.com/yami-beta/license-pack
  *   maintainers:
  *     m1 <m1@example.com> (m1.example.com)
  *     m2 <m2@example.com> (m2.example.com)
@@ -127,24 +143,12 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
   });
 
   it('generateHtml() without license file', () => {
-    const pkg = {
-      name: 'name',
-      version: '1.0.0',
-      author: 'author',
-      maintainers: [
-        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
-      ],
-      contributors: [
-        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
-      ],
-      license: 'MIT',
-    };
+    const pkg = withoutLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
 <p>author: author</p>
+<p>url: https://github.com/yami-beta/license-pack</p>
 <p>maintainers:</p>
 <ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
 <p>contributors:</p>
@@ -157,29 +161,12 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
   });
 
   it('generateHtml() with license file', () => {
-    const pkg = {
-      name: 'name',
-      version: '1.0.0',
-      author: 'author',
-      maintainers: [
-        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
-      ],
-      contributors: [
-        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
-      ],
-      license: 'MIT',
-      licenseFile: `MIT License
-
-Copyright (c) 2016 yami_beta
-
-Permission is hereby granted, free of charge, to any person obtaining a copy`,
-    };
+    const pkg = withLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
 <h3>name@1.0.0 (MIT)</h3>
 <p>author: author</p>
+<p>url: https://github.com/yami-beta/license-pack</p>
 <p>maintainers:</p>
 <ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
 <p>contributors:</p>

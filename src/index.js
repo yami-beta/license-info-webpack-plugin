@@ -20,6 +20,7 @@ export function formatPackageInfo(pkg) {
     license: pkg.license || pkg.licenses,
     maintainers: pkg.maintainers,
     contributors: pkg.contributors,
+    repository: pkg.repository,
     pkgPath: pkg.pkgPath,
   };
 }
@@ -79,6 +80,18 @@ export function generateBanner(modules) {
         }
       }
     }
+    if (pkg.repository) {
+      switch (typeof pkg.repository) {
+        case 'object': {
+          pkgInfoText += `\n${indent}   url: ${pkg.repository.url}`;
+          break;
+        }
+        case 'string': {
+          pkgInfoText += `\n${indent}   url: ${pkg.repository}`;
+          break;
+        }
+      }
+    }
     if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
       pkgInfoText += `\n${indent}   maintainers:`;
       pkg.maintainers.forEach((m) => {
@@ -110,12 +123,6 @@ export function generateBanner(modules) {
       });
     }
 
-    let author = pkg.author;
-    if (typeof author === 'object') {
-      author = `${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
-    }
-    const copyright = `  Copyright (c) ${author}. All rights reserved.`;
-
     return `${indent} ${pkg.name}@${pkg.version} (${pkg.license})
 ${pkgInfoText === '' ? `${indent}` : ` ${pkgInfoText.trim()}`}
 ${licenseStr}
@@ -144,6 +151,18 @@ export function generateHtml(modules) {
         }
         case 'string': {
           pkgInfoText += `\n<p>author: ${pkg.author}</p>`;
+          break;
+        }
+      }
+    }
+    if (pkg.repository) {
+      switch (typeof pkg.repository) {
+        case 'object': {
+          pkgInfoText += `\n<p>url: ${pkg.repository.url}</p>`;
+          break;
+        }
+        case 'string': {
+          pkgInfoText += `\n<p>url: ${pkg.repository}</p>`;
           break;
         }
       }
@@ -184,13 +203,6 @@ export function generateHtml(modules) {
       });
       pkgInfoText += `</ul>`;
     }
-
-
-    let author = pkg.author;
-    if (typeof author === 'object') {
-      author = `${pkg.author.name}${pkg.author.url ? ` (${pkg.author.url})` : ''}`;
-    }
-    const copyright = `Copyright (c) ${author}. All rights reserved.`;
 
     return `
 <h3>${pkg.name}@${pkg.version} (${pkg.license})</h3>
