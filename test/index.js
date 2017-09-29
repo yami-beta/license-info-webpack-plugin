@@ -56,19 +56,25 @@ describe('license-pack', () => {
       name: 'name',
       version: '1.0.0',
       author: 'author',
-      maintainers: ['maintainer1', 'maintainer2'],
-      contributors: ['contributor1', 'contributor2'],
+      maintainers: [
+        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      ],
+      contributors: [
+        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      ],
       license: 'MIT',
     };
     const expected = `/*!
  * name@1.0.0 (MIT)
  *   author: author
  *   maintainers:
- *     maintainer1
- *     maintainer2
+ *     m1 <m1@example.com> (m1.example.com)
+ *     m2 <m2@example.com> (m2.example.com)
  *   contributors:
- *     contributor1
- *     contributor2
+ *     c1 <c1@example.com> (c1.example.com)
+ *     c2 <c2@example.com> (c2.example.com)
  *
  *
  */
@@ -82,8 +88,14 @@ describe('license-pack', () => {
       name: 'name',
       version: '1.0.0',
       author: 'author',
-      maintainers: ['maintainer1', 'maintainer2'],
-      contributors: ['contributor1', 'contributor2'],
+      maintainers: [
+        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      ],
+      contributors: [
+        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      ],
       license: 'MIT',
       licenseFile: `MIT License
 
@@ -95,11 +107,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  * name@1.0.0 (MIT)
  *   author: author
  *   maintainers:
- *     maintainer1
- *     maintainer2
+ *     m1 <m1@example.com> (m1.example.com)
+ *     m2 <m2@example.com> (m2.example.com)
  *   contributors:
- *     contributor1
- *     contributor2
+ *     c1 <c1@example.com> (c1.example.com)
+ *     c2 <c2@example.com> (c2.example.com)
  *
  *   MIT License
  *
@@ -119,8 +131,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
       name: 'name',
       version: '1.0.0',
       author: 'author',
-      maintainers: ['maintainer1', 'maintainer2'],
-      contributors: ['contributor1', 'contributor2'],
+      maintainers: [
+        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      ],
+      contributors: [
+        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      ],
       license: 'MIT',
     };
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
@@ -128,9 +146,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
 <h3>name@1.0.0 (MIT)</h3>
 <p>author: author</p>
 <p>maintainers:</p>
-<ul><li>maintainer1</li><li>maintainer2</li></ul>
+<ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
 <p>contributors:</p>
-<ul><li>contributor1</li><li>contributor2</li></ul>
+<ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul>
 <blockquote>
   <pre></pre>
 </blockquote>
@@ -143,8 +161,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
       name: 'name',
       version: '1.0.0',
       author: 'author',
-      maintainers: ['maintainer1', 'maintainer2'],
-      contributors: ['contributor1', 'contributor2'],
+      maintainers: [
+        { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
+        { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      ],
+      contributors: [
+        { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
+        { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      ],
       license: 'MIT',
       licenseFile: `MIT License
 
@@ -157,9 +181,9 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
 <h3>name@1.0.0 (MIT)</h3>
 <p>author: author</p>
 <p>maintainers:</p>
-<ul><li>maintainer1</li><li>maintainer2</li></ul>
+<ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul>
 <p>contributors:</p>
-<ul><li>contributor1</li><li>contributor2</li></ul>
+<ul><li>c1 &lt;c1@example.com&gt; (c1.example.com)</li><li>c2 &lt;c2@example.com&gt; (c2.example.com)</li></ul>
 <blockquote>
   <pre>MIT License
 

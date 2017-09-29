@@ -81,13 +81,33 @@ export function generateBanner(modules) {
     }
     if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
       pkgInfoText += `\n${indent}   maintainers:`;
-      const maintainers = pkg.maintainers.join(`\n${indent}     `);
-      pkgInfoText += `\n${indent}     ${maintainers}`;
+      pkg.maintainers.forEach((m) => {
+        switch (typeof m) {
+          case 'object': {
+            pkgInfoText += `\n${indent}     ${m.name}${m.email ? ` <${m.email}>` : ''}${m.url ? ` (${m.url})` : ''}`;
+            break;
+          }
+          case 'string': {
+            pkgInfoText += `\n${indent}     ${m}`;
+            break;
+          }
+        }
+      });
     }
     if (pkg.contributors && Array.isArray(pkg.contributors)) {
       pkgInfoText += `\n${indent}   contributors:`;
-      const contributors = pkg.contributors.join(`\n${indent}     `);
-      pkgInfoText += `\n${indent}     ${contributors}`;
+      pkg.contributors.forEach((c) => {
+        switch (typeof c) {
+          case 'object': {
+            pkgInfoText += `\n${indent}     ${c.name}${c.email ? ` <${c.email}>` : ''}${c.url ? ` (${c.url})` : ''}`;
+            break;
+          }
+          case 'string': {
+            pkgInfoText += `\n${indent}     ${c}`;
+            break;
+          }
+        }
+      });
     }
 
     let author = pkg.author;
@@ -132,8 +152,17 @@ export function generateHtml(modules) {
       pkgInfoText += `
 <p>maintainers:</p>
 <ul>`;
-      pkg.maintainers.forEach((maintainer) => {
-        pkgInfoText += `<li>${maintainer}</li>`
+      pkg.maintainers.forEach((m) => {
+        switch (typeof m) {
+          case 'object': {
+            pkgInfoText += `<li>${m.name}${m.email ? ` &lt;${m.email}&gt;` : ''}${m.url ? ` (${m.url})` : ''}</li>`;
+            break;
+          }
+          case 'string': {
+            pkgInfoText += `<li>${m}</li>`;
+            break;
+          }
+        }
       });
       pkgInfoText += `</ul>`;
     }
@@ -141,8 +170,17 @@ export function generateHtml(modules) {
       pkgInfoText += `
 <p>contributors:</p>
 <ul>`;
-      pkg.contributors.forEach((contributor) => {
-        pkgInfoText += `<li>${contributor}</li>`;
+      pkg.contributors.forEach((c) => {
+        switch (typeof c) {
+          case 'object': {
+            pkgInfoText += `<li>${c.name}${c.email ? ` &lt;${c.email}&gt;` : ''}${c.url ? ` (${c.url})` : ''}</li>`;
+            break;
+          }
+          case 'string': {
+            pkgInfoText += `<li>${c}</li>`;
+            break;
+          }
+        }
       });
       pkgInfoText += `</ul>`;
     }
