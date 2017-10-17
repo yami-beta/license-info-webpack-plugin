@@ -15,7 +15,7 @@ $ yarn add --dev license-info-webpack-plugin
 ## Usage
 
 ```js
-const LicensePack = require('license-info-webpack-plugin').default;
+const LicenseInfoWebpackPlugin = require('license-info-webpack-plugin').default;
 
 module.exports = {
   entry: './src/js/index.js',
@@ -24,7 +24,7 @@ module.exports = {
     filename: '[name].js'
   },
   plugins: [
-    new LicensePack({
+    new LicenseInfoWebpackPlugin({
       glob: '{LICENSE,license,License}*'
     })
   ]
