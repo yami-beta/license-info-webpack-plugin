@@ -265,7 +265,10 @@ export default class LicenseInfoWebpackPlugin {
               break;
             }
             default: {
+              // Check path.extname(filename) for append comment only `.js` files
+              const re = /^\.js/;
               chunk.files.forEach((filename) => {
+                if (!re.test(path.extname(filename))) { return; }
                 compilation.assets[filename] = new ConcatSource(
                   generateBanner(uniquePkgList),
                   compilation.assets[filename]);
