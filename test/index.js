@@ -1,7 +1,7 @@
 import assert from 'assert';
 import * as Utils from '../src/index';
 
-describe('license-pack', () => {
+describe('license-info-webpack-plugin', () => {
   it('getLicenseFileByString()', () => {
     const results = Utils.getLicenseFileByString(`${__dirname}/..`, '{LICENSE,license,License}*');
     assert.equal(results.split(/\n/)[0], 'MIT License');
@@ -29,7 +29,7 @@ describe('license-pack', () => {
 
   it('getPackageJson()', () => {
     const results = Utils.getPackageJson(`${__dirname}/../`);
-    assert.equal(results.name, 'license-pack');
+    assert.equal(results.name, 'license-info-webpack-plugin');
     assert.equal(results.license, 'MIT');
   });
 
@@ -61,7 +61,7 @@ describe('license-pack', () => {
     author: 'author',
     repository: {
       "type": "git",
-      "url": "https://github.com/yami-beta/license-pack",
+      "url": "https://github.com/yami-beta/license-info-webpack-plugin",
     },
     maintainers: [
       { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
@@ -79,7 +79,7 @@ describe('license-pack', () => {
     author: 'author',
     repository: {
       "type": "git",
-      "url": "https://github.com/yami-beta/license-pack",
+      "url": "https://github.com/yami-beta/license-info-webpack-plugin",
     },
     maintainers: [
       { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
@@ -101,7 +101,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     const expected = `/*!
  * name@1.0.0 (MIT)
  *   author: author
- *   url: https://github.com/yami-beta/license-pack
+ *   url: https://github.com/yami-beta/license-info-webpack-plugin
  *   maintainers:
  *     m1 <m1@example.com> (m1.example.com)
  *     m2 <m2@example.com> (m2.example.com)
@@ -121,7 +121,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     const expected = `/*!
  * name@1.0.0 (MIT)
  *   author: author
- *   url: https://github.com/yami-beta/license-pack
+ *   url: https://github.com/yami-beta/license-info-webpack-plugin
  *   maintainers:
  *     m1 <m1@example.com> (m1.example.com)
  *     m2 <m2@example.com> (m2.example.com)
@@ -151,7 +151,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
 <dt>author</dt>
 <dd>author</dd>
 <dt>url</dt>
-<dd>https://github.com/yami-beta/license-pack</dd>
+<dd>https://github.com/yami-beta/license-info-webpack-plugin</dd>
 <dt>maintainers</dt>
 <dd><ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul></dd>
 <dt>contributors</dt>
@@ -173,7 +173,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
 <dt>author</dt>
 <dd>author</dd>
 <dt>url</dt>
-<dd>https://github.com/yami-beta/license-pack</dd>
+<dd>https://github.com/yami-beta/license-info-webpack-plugin</dd>
 <dt>maintainers</dt>
 <dd><ul><li>m1 &lt;m1@example.com&gt; (m1.example.com)</li><li>m2 &lt;m2@example.com&gt; (m2.example.com)</li></ul></dd>
 <dt>contributors</dt>

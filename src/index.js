@@ -218,7 +218,7 @@ ${pkgInfoText.trim()}
   return htmlAry;
 }
 
-export default class LicensePack {
+export default class LicenseInfoWebpackPlugin {
   constructor(options) {
     const defaultOptions = {
       glob: '{LICENSE,license,License}*',
