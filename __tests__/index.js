@@ -1,49 +1,58 @@
-import * as Utils from '../src/index';
+import * as Utils from "../src/index";
 
-describe('license-info-webpack-plugin', () => {
-  test('getLicenseFileByString()', () => {
-    const results = Utils.getLicenseFileByString(`${__dirname}/..`, '{LICENSE,license,License}*');
-    expect(results.split(/\n/)[0]).toBe('MIT License');
+describe("license-info-webpack-plugin", () => {
+  test("getLicenseFileByString()", () => {
+    const results = Utils.getLicenseFileByString(
+      `${__dirname}/..`,
+      "{LICENSE,license,License}*"
+    );
+    expect(results.split(/\n/)[0]).toBe("MIT License");
 
-    const error = Utils.getLicenseFileByString(`${__dirname}/..`, 'license*');
+    const error = Utils.getLicenseFileByString(`${__dirname}/..`, "license*");
     expect(error).toBe(null);
   });
 
-  test('formatPackageInfo()', () => {
+  test("formatPackageInfo()", () => {
     const target = {
-      name: 'name',
-      version: 'version',
-      author: 'author',
-      license: 'license',
-      maintainers: 'maintainers',
-      contributors: 'contributors',
-      repository: 'repository',
-      pkgPath: 'pkgPath',
-      removed: 'removed',
+      name: "name",
+      version: "version",
+      author: "author",
+      license: "license",
+      maintainers: "maintainers",
+      contributors: "contributors",
+      repository: "repository",
+      pkgPath: "pkgPath",
+      removed: "removed"
     };
     const results = Utils.formatPackageInfo(target);
     expect(Object.keys(results).length).toBe(8);
     expect(results.removed).toBe(undefined);
   });
 
-  test('getPackageJson()', () => {
+  test("getPackageJson()", () => {
     const results = Utils.getPackageJson(`${__dirname}/../`);
-    expect(results.name).toBe('license-info-webpack-plugin');
-    expect(results.license).toBe('MIT');
+    expect(results.name).toBe("license-info-webpack-plugin");
+    expect(results.license).toBe("MIT");
   });
 
-  test('getPackagePath()', () => {
-    expect(Utils.getPackagePath('/dev/node_modules/foo/index.js')).toBe('/dev/node_modules/foo');
-    expect(Utils.getPackagePath('/dev/node_modules/foo/lib/index.js')).toBe('/dev/node_modules/foo');
+  test("getPackagePath()", () => {
+    expect(Utils.getPackagePath("/dev/node_modules/foo/index.js")).toBe(
+      "/dev/node_modules/foo"
+    );
+    expect(Utils.getPackagePath("/dev/node_modules/foo/lib/index.js")).toBe(
+      "/dev/node_modules/foo"
+    );
     // scoped modules
-    expect(Utils.getPackagePath('/dev/node_modules/@user/foo/index.js')).toBe('/dev/node_modules/@user/foo');
+    expect(Utils.getPackagePath("/dev/node_modules/@user/foo/index.js")).toBe(
+      "/dev/node_modules/@user/foo"
+    );
   });
 
-  test('filterNodeModules()', () => {
+  test("filterNodeModules()", () => {
     const modules = [
-      { resource: '/dev/node_modules/foo/index.js' },
-      { resource: '/dev/index.js' },
-      { resource: '/dev/node_modules/foo/node_modules/bar/index.js' },
+      { resource: "/dev/node_modules/foo/index.js" },
+      { resource: "/dev/index.js" },
+      { resource: "/dev/node_modules/foo/node_modules/bar/index.js" }
     ];
     const results = Utils.filterNodeModules(modules);
     expect(results.length).toBe(2);
@@ -55,47 +64,47 @@ describe('license-info-webpack-plugin', () => {
    * Generate LICENSE tests
    */
   const withoutLicensePkg = {
-    name: 'name',
-    version: '1.0.0',
-    author: 'author',
+    name: "name",
+    version: "1.0.0",
+    author: "author",
     repository: {
-      "type": "git",
-      "url": "https://github.com/yami-beta/license-info-webpack-plugin",
+      type: "git",
+      url: "https://github.com/yami-beta/license-info-webpack-plugin"
     },
     maintainers: [
-      { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-      { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      { name: "m1", email: "m1@example.com", url: "m1.example.com" },
+      { name: "m2", email: "m2@example.com", url: "m2.example.com" }
     ],
     contributors: [
-      { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-      { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      { name: "c1", email: "c1@example.com", url: "c1.example.com" },
+      { name: "c2", email: "c2@example.com", url: "c2.example.com" }
     ],
-    license: 'MIT',
+    license: "MIT"
   };
   const withLicensePkg = {
-    name: 'name',
-    version: '1.0.0',
-    author: 'author',
+    name: "name",
+    version: "1.0.0",
+    author: "author",
     repository: {
-      "type": "git",
-      "url": "https://github.com/yami-beta/license-info-webpack-plugin",
+      type: "git",
+      url: "https://github.com/yami-beta/license-info-webpack-plugin"
     },
     maintainers: [
-      { name: 'm1', email: 'm1@example.com', url: 'm1.example.com' },
-      { name: 'm2', email: 'm2@example.com', url: 'm2.example.com' },
+      { name: "m1", email: "m1@example.com", url: "m1.example.com" },
+      { name: "m2", email: "m2@example.com", url: "m2.example.com" }
     ],
     contributors: [
-      { name: 'c1', email: 'c1@example.com', url: 'c1.example.com' },
-      { name: 'c2', email: 'c2@example.com', url: 'c2.example.com' },
+      { name: "c1", email: "c1@example.com", url: "c1.example.com" },
+      { name: "c2", email: "c2@example.com", url: "c2.example.com" }
     ],
-    license: 'MIT',
+    license: "MIT",
     licenseFile: `MIT License
 
 Copyright (c) 2016 yami_beta
 
-Permission is hereby granted, free of charge, to any person obtaining a copy`,
+Permission is hereby granted, free of charge, to any person obtaining a copy`
   };
-  test('generateBanner() without license file', () => {
+  test("generateBanner() without license file", () => {
     const pkg = withoutLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
@@ -111,11 +120,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  *
  */
 `;
-    const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
+    const results = Utils.generateBanner({
+      [`${pkg.name}@${pkg.version}`]: pkg
+    });
     expect(results).toBe(expected);
   });
 
-  test('generateBanner() with license file', () => {
+  test("generateBanner() with license file", () => {
     const pkg = withLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
@@ -137,11 +148,13 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  *
  */
 `;
-    const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
+    const results = Utils.generateBanner({
+      [`${pkg.name}@${pkg.version}`]: pkg
+    });
     expect(results).toBe(expected);
   });
 
-  test('generateHtml() without license file', () => {
+  test("generateHtml() without license file", () => {
     const pkg = withoutLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
@@ -163,7 +176,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
     expect(results[0]).toBe(expected);
   });
 
-  test('generateHtml() with license file', () => {
+  test("generateHtml() with license file", () => {
     const pkg = withLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `

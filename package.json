@@ -30,14 +30,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.0.0",
     "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.1.8",
-    "eslint": "^3.13.1",
-    "eslint-config-airbnb-base": "^11.0.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jest": "^21.5.0",
-    "jest": "^21.2.1"
+    "jest": "^21.2.1",
+    "prettier": "^1.9.2"
   },
   "dependencies": {
     "glob": "^7.1.1",
