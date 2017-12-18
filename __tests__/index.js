@@ -1,16 +1,15 @@
-import assert from 'assert';
 import * as Utils from '../src/index';
 
 describe('license-info-webpack-plugin', () => {
-  it('getLicenseFileByString()', () => {
+  test('getLicenseFileByString()', () => {
     const results = Utils.getLicenseFileByString(`${__dirname}/..`, '{LICENSE,license,License}*');
-    assert.equal(results.split(/\n/)[0], 'MIT License');
+    expect(results.split(/\n/)[0]).toBe('MIT License');
 
     const error = Utils.getLicenseFileByString(`${__dirname}/..`, 'license*');
-    assert.equal(error, null);
+    expect(error).toBe(null);
   });
 
-  it('formatPackageInfo()', () => {
+  test('formatPackageInfo()', () => {
     const target = {
       name: 'name',
       version: 'version',
@@ -23,33 +22,33 @@ describe('license-info-webpack-plugin', () => {
       removed: 'removed',
     };
     const results = Utils.formatPackageInfo(target);
-    assert.equal(Object.keys(results).length, 8);
-    assert.equal(results.removed, undefined);
+    expect(Object.keys(results).length).toBe(8);
+    expect(results.removed).toBe(undefined);
   });
 
-  it('getPackageJson()', () => {
+  test('getPackageJson()', () => {
     const results = Utils.getPackageJson(`${__dirname}/../`);
-    assert.equal(results.name, 'license-info-webpack-plugin');
-    assert.equal(results.license, 'MIT');
+    expect(results.name).toBe('license-info-webpack-plugin');
+    expect(results.license).toBe('MIT');
   });
 
-  it('getPackagePath()', () => {
-    assert.equal(Utils.getPackagePath('/dev/node_modules/foo/index.js'), '/dev/node_modules/foo');
-    assert.equal(Utils.getPackagePath('/dev/node_modules/foo/lib/index.js'), '/dev/node_modules/foo');
+  test('getPackagePath()', () => {
+    expect(Utils.getPackagePath('/dev/node_modules/foo/index.js')).toBe('/dev/node_modules/foo');
+    expect(Utils.getPackagePath('/dev/node_modules/foo/lib/index.js')).toBe('/dev/node_modules/foo');
     // scoped modules
-    assert.equal(Utils.getPackagePath('/dev/node_modules/@user/foo/index.js'), '/dev/node_modules/@user/foo');
+    expect(Utils.getPackagePath('/dev/node_modules/@user/foo/index.js')).toBe('/dev/node_modules/@user/foo');
   });
 
-  it('filterNodeModules()', () => {
+  test('filterNodeModules()', () => {
     const modules = [
       { resource: '/dev/node_modules/foo/index.js' },
       { resource: '/dev/index.js' },
       { resource: '/dev/node_modules/foo/node_modules/bar/index.js' },
     ];
     const results = Utils.filterNodeModules(modules);
-    assert.equal(results.length, 2);
-    assert.equal(results[0], modules[0]);
-    assert.equal(results[1], modules[2]);
+    expect(results.length).toBe(2);
+    expect(results[0]).toBe(modules[0]);
+    expect(results[1]).toBe(modules[2]);
   });
 
   /**
@@ -96,7 +95,7 @@ Copyright (c) 2016 yami_beta
 
 Permission is hereby granted, free of charge, to any person obtaining a copy`,
   };
-  it('generateBanner() without license file', () => {
+  test('generateBanner() without license file', () => {
     const pkg = withoutLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
@@ -113,10 +112,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  */
 `;
     const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
-    assert.equal(results, expected);
+    expect(results).toBe(expected);
   });
 
-  it('generateBanner() with license file', () => {
+  test('generateBanner() with license file', () => {
     const pkg = withLicensePkg;
     const expected = `/*!
  * name@1.0.0 (MIT)
@@ -139,10 +138,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
  */
 `;
     const results = Utils.generateBanner({ [`${pkg.name}@${pkg.version}`]: pkg });
-    assert.equal(results, expected);
+    expect(results).toBe(expected);
   });
 
-  it('generateHtml() without license file', () => {
+  test('generateHtml() without license file', () => {
     const pkg = withoutLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
@@ -161,10 +160,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy`,
   <pre></pre>
 </blockquote>
 `;
-    assert.equal(results[0], expected);
+    expect(results[0]).toBe(expected);
   });
 
-  it('generateHtml() with license file', () => {
+  test('generateHtml() with license file', () => {
     const pkg = withLicensePkg;
     const results = Utils.generateHtml({ [`${pkg.name}@${pkg.version}`]: pkg });
     const expected = `
@@ -187,6 +186,6 @@ Copyright (c) 2016 yami_beta
 Permission is hereby granted, free of charge, to any person obtaining a copy</pre>
 </blockquote>
 `;
-    assert.equal(results[0], expected);
+    expect(results[0]).toBe(expected);
   });
 });

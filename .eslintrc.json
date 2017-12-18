@@ -1,9 +1,13 @@
 {
-    "extends": "airbnb-base",
-    "plugins": [
-        "import"
-    ],
-    "rules": {
-        "no-param-reassign": ["error", { "props": false }]
-    }
+  "extends": "airbnb-base",
+  "plugins": [
+    "import",
+    "jest"
+  ],
+  "rules": {
+    "no-param-reassign": ["error", { "props": false }]
+  },
+  "env": {
+    "jest/global": true
+  }
 }
