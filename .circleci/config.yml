@@ -1,0 +1,39 @@
+version: 2
+references:
+  run_test: &run_test
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ .Environment.CIRCLE_STAGE }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - v1-dependencies-{{ .Environment.CIRCLE_STAGE }}-{{ .Branch }}
+          - v1-dependencies-{{ .Environment.CIRCLE_STAGE }}
+
+      - run: yarn install --frozen-lockfile
+
+      - save_cache:
+          paths:
+            - node_modules
+            - ~/.cache/yarn/
+          key: v1-dependencies-{{ .Environment.CIRCLE_STAGE }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
+      - run: yarn test
+
+jobs:
+  test_v8:
+    <<: *run_test
+    docker:
+      - image: circleci/node:8.9
+  test_v9:
+    <<: *run_test
+    docker:
+      - image: circleci/node:9.6
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - test_v8
+      - test_v9
