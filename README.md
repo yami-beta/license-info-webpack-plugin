@@ -1,7 +1,7 @@
 # license-info-webpack-plugin
 
 [![npm version](https://badge.fury.io/js/license-info-webpack-plugin.svg)](https://www.npmjs.com/package/license-info-webpack-plugin)
-[![CircleCI](https://circleci.com/gh/yami-beta/license-info-webpack-plugin.svg?style=svg)](https://circleci.com/gh/yami-beta/license-info-webpack-plugin)
+[![Build Status](https://travis-ci.org/yami-beta/license-info-webpack-plugin.svg?branch=master)](https://travis-ci.org/yami-beta/license-info-webpack-plugin)
 
 `license-info-webpack-plugin` is a webpack plugin for making a list of package's LICENSE information, inspired by [licensify](https://github.com/twada/licensify).
 
