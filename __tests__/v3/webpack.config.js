@@ -1,5 +1,6 @@
 const path = require("path");
 const LicenseInfoWebpackPlugin = require("../../src/index").default;
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -32,6 +33,13 @@ module.exports = {
     new LicenseInfoWebpackPlugin({
       output: "banner",
       includeLicenseFile: true
+    }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: /^\**!|@preserve|@license|@cc_on/
+        }
+      }
     })
   ],
   context: path.join(__dirname)
