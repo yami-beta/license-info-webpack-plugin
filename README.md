@@ -15,8 +15,15 @@ $ yarn add --dev license-info-webpack-plugin
 
 ## Usage
 
+If you use `uglifyjs-webpack-plugin@^1.1.0`, you need to set `uglifyOptions` for preserve license comments.  
+Related: https://github.com/webpack-contrib/uglifyjs-webpack-plugin/pull/174
+
+### webpack v4
+
 ```js
+const path = require('path');
 const LicenseInfoWebpackPlugin = require('license-info-webpack-plugin').default;
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: './src/js/index.js',
@@ -27,6 +34,46 @@ module.exports = {
   plugins: [
     new LicenseInfoWebpackPlugin({
       glob: '{LICENSE,license,License}*'
+    }),
+  ],
+  mode: 'production',
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          output: {
+            comments: /^\**!|@preserve|@license|@cc_on/
+          }
+        }
+      })
+    ]
+  }
+};
+```
+
+### webpack v3
+
+```js
+const path = require('path');
+const LicenseInfoWebpackPlugin = require('license-info-webpack-plugin').default;
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
+module.exports = {
+  entry: './src/js/index.js',
+  output: {
+    path: path.join(__dirname, 'dist/js'),
+    filename: '[name].js'
+  },
+  plugins: [
+    new LicenseInfoWebpackPlugin({
+      glob: '{LICENSE,license,License}*'
+    }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: /^\**!|@preserve|@license|@cc_on/
+        }
+      }
     })
   ]
 };

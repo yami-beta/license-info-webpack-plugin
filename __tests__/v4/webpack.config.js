@@ -33,14 +33,19 @@ module.exports = {
     new LicenseInfoWebpackPlugin({
       output: "banner",
       includeLicenseFile: true
-    }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        output: {
-          comments: /^\**!|@preserve|@license|@cc_on/
-        }
-      }
     })
   ],
+  mode: "production",
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          output: {
+            comments: /^\**!|@preserve|@license|@cc_on/
+          }
+        }
+      })
+    ]
+  },
   context: path.join(__dirname)
 };

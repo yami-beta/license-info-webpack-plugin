@@ -11,6 +11,7 @@
     "build": "NODE_ENV=production babel src -d lib",
     "prettier": "prettier --write '{src,__tests__}/**/*.js'",
     "fixtures:v3": "cd __tests__/v3/ && yarn install",
+    "fixtures:v4": "cd __tests__/v4/ && yarn install",
     "jest": "jest",
     "test": "npm-run-all fixtures:* jest",
     "version": "npm run build"

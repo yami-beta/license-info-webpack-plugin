@@ -248,68 +248,92 @@ export default class LicenseInfoWebpackPlugin {
     this.basePath = null;
   }
 
+  outputLicense(compilation, chunks, callback) {
+    const chunkIsInitial = chunk => {
+      if (typeof chunk.isInitial === "function") {
+        // webpack v3
+        return chunk.isInitial();
+      }
+
+      return chunk.canBeInitial();
+    };
+
+    chunks.forEach(chunk => {
+      const modules = filterNodeModules(
+        Array.from(chunk.modulesIterable, mod => mod)
+      );
+      const pkgList = modules.map(mod => {
+        const pkgPath = getPackagePath(mod.resource);
+        const pkg = getPackageJson(pkgPath);
+        pkg.pkgPath = pkgPath;
+        const pkgInfo = formatPackageInfo(pkg);
+        if (this.opts.includeLicenseFile) {
+          pkgInfo.licenseFile = getLicenseFileByString(pkgPath, this.opts.glob);
+        } else {
+          pkgInfo.licenseFile = null;
+        }
+        return pkgInfo;
+      });
+      let uniquePkgList = {};
+      pkgList.forEach(pkg => {
+        if (uniquePkgList[`${pkg.name}@${pkg.version}`]) return;
+        uniquePkgList[`${pkg.name}@${pkg.version}`] = pkg;
+      });
+
+      if (!chunkIsInitial(chunk)) return;
+
+      switch (this.opts.output) {
+        case "html": {
+          const filepath = path.join(
+            this.opts.outputPath,
+            `license-${chunk.name}.html`
+          );
+          fs.writeFileSync(
+            filepath,
+            generateHtml(uniquePkgList).join("\n"),
+            "utf-8"
+          );
+          break;
+        }
+        default: {
+          // Check path.extname(filename) for append comment only `.js` files
+          const re = /^\.js/;
+          chunk.files.forEach(filename => {
+            if (!re.test(path.extname(filename))) {
+              return;
+            }
+            compilation.assets[filename] = new ConcatSource(
+              generateBanner(uniquePkgList),
+              compilation.assets[filename]
+            );
+          });
+        }
+      }
+    });
+
+    callback();
+  }
+
   apply(compiler) {
     this.basePath = path.join(compiler.context, "node_modules");
 
-    compiler.plugin("compilation", compilation => {
-      compilation.plugin("optimize-chunk-assets", (chunks, callback) => {
-        chunks.forEach(chunk => {
-          // chunk.modules are deprecated from webpack v3.x
-          const modules = filterNodeModules(chunk.mapModules(mod => mod));
-          const pkgList = modules.map(mod => {
-            const pkgPath = getPackagePath(mod.resource);
-            const pkg = getPackageJson(pkgPath);
-            pkg.pkgPath = pkgPath;
-            const pkgInfo = formatPackageInfo(pkg);
-            if (this.opts.includeLicenseFile) {
-              pkgInfo.licenseFile = getLicenseFileByString(
-                pkgPath,
-                this.opts.glob
-              );
-            } else {
-              pkgInfo.licenseFile = null;
-            }
-            return pkgInfo;
-          });
-          let uniquePkgList = {};
-          pkgList.forEach(pkg => {
-            if (uniquePkgList[`${pkg.name}@${pkg.version}`]) return;
-            uniquePkgList[`${pkg.name}@${pkg.version}`] = pkg;
-          });
-
-          if (!chunk.isInitial()) return;
-
-          switch (this.opts.output) {
-            case "html": {
-              const filepath = path.join(
-                this.opts.outputPath,
-                `license-${chunk.name}.html`
-              );
-              fs.writeFileSync(
-                filepath,
-                generateHtml(uniquePkgList).join("\n"),
-                "utf-8"
-              );
-              break;
-            }
-            default: {
-              // Check path.extname(filename) for append comment only `.js` files
-              const re = /^\.js/;
-              chunk.files.forEach(filename => {
-                if (!re.test(path.extname(filename))) {
-                  return;
-                }
-                compilation.assets[filename] = new ConcatSource(
-                  generateBanner(uniquePkgList),
-                  compilation.assets[filename]
-                );
-              });
-            }
+    if (compiler.hooks) {
+      const plugin = { name: "license-info-webpack-plugin" };
+      compiler.hooks.compilation.tap(plugin, compilation => {
+        compilation.hooks.optimizeChunkAssets.tapAsync(
+          plugin,
+          (chunks, callback) => {
+            this.outputLicense(compilation, chunks, callback);
           }
-        });
-
-        callback();
+        );
       });
-    });
+    } else {
+      // webpack v3
+      compiler.plugin("compilation", compilation => {
+        compilation.plugin("optimize-chunk-assets", (chunks, callback) => {
+          this.outputLicense(compilation, chunks, callback);
+        });
+      });
+    }
   }
 }

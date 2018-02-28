@@ -46,7 +46,9 @@ jspm_packages
 # Project
 
 /lib/
+!__tests__/fixtures/node_modules
 __tests__/v3/dist/*
 !__tests__/v3/dist/.gitkeep
-!__tests__/fixtures/node_modules
+__tests__/v4/dist/*
+!__tests__/v4/dist/.gitkeep
 
