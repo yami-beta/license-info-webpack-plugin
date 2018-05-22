@@ -85,13 +85,8 @@ Related: https://github.com/webpack-contrib/uglifyjs-webpack-plugin/pull/174
 - `output`
     - Output type: `'banner'` or `'html'`
         - `'banner'`: Append comment to top of bundled code
-        - `'html'`: Generate html
+        - `'html'`: Generate html (e.g. `license.[name].html`)
     - Default: `'banner'`
-- `outputPath`
-    - Output path for generated html
-    - If `outputPath` is `'./'`, `./license-[name].html` are generated
-    - This option is enabled if `output: 'html'` is set.
-    - Default: `'./'`
 - `includeLicenseFile`
     - Include and put LICENSE file
     - Default: `true`

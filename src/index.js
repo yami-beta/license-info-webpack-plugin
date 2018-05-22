@@ -241,11 +241,11 @@ export default class LicenseInfoWebpackPlugin {
     const defaultOptions = {
       glob: "{LICENSE,license,License}*",
       output: "banner",
-      outputPath: "./",
       includeLicenseFile: true
     };
     this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
+    this.chunkLicenses = [];
   }
 
   outputLicense(compilation, chunks, callback) {
@@ -284,15 +284,10 @@ export default class LicenseInfoWebpackPlugin {
 
       switch (this.opts.output) {
         case "html": {
-          const filepath = path.join(
-            this.opts.outputPath,
-            `license-${chunk.name}.html`
-          );
-          fs.writeFileSync(
-            filepath,
-            generateHtml(uniquePkgList).join("\n"),
-            "utf-8"
-          );
+          this.chunkLicenses.push({
+            chunkName: chunk.name,
+            html: generateHtml(uniquePkgList).join("\n")
+          });
           break;
         }
         default: {
@@ -314,6 +309,16 @@ export default class LicenseInfoWebpackPlugin {
     callback();
   }
 
+  appendLicenseHtml(compilation, cb) {
+    for (let cl of this.chunkLicenses) {
+      compilation.assets[`license.${cl.chunkName}.html`] = {
+        source: () => cl.html,
+        size: () => cl.html.length
+      }
+    }
+    cb();
+  }
+
   apply(compiler) {
     this.basePath = path.join(compiler.context, "node_modules");
 
@@ -327,6 +332,9 @@ export default class LicenseInfoWebpackPlugin {
           }
         );
       });
+      compiler.hooks.emit.tapAsync(plugin, (compilation, cb) => {
+        this.appendLicenseHtml(compilation, cb);
+      });
     } else {
       // webpack v3
       compiler.plugin("compilation", compilation => {
@@ -334,6 +342,9 @@ export default class LicenseInfoWebpackPlugin {
           this.outputLicense(compilation, chunks, callback);
         });
       });
+      compiler.plugin("emit", (compilation, cb) => {
+        this.appendLicenseHtml(compilation, cb);
+      })
     }
   }
 }
