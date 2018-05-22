@@ -240,7 +240,7 @@ export default class LicenseInfoWebpackPlugin {
   constructor(options) {
     const defaultOptions = {
       glob: "{LICENSE,license,License}*",
-      output: "banner",
+      outputType: "banner",
       includeLicenseFile: true
     };
     this.opts = Object.assign({}, defaultOptions, options);
@@ -292,7 +292,7 @@ export default class LicenseInfoWebpackPlugin {
   }
 
   generateLicense(compilation, cb) {
-    switch (this.opts.output) {
+    switch (this.opts.outputType) {
       case "html": {
         for (let cl of this.chunkLicenses) {
           const html = generateHtml(cl.pkgs).join("\n");

@@ -82,7 +82,7 @@ Related: https://github.com/webpack-contrib/uglifyjs-webpack-plugin/pull/174
 - `glob`
     - Glob pattern for LICENSE file
     - Default: `'{LICENSE,license,License}*'`
-- `output`
+- `outputType`
     - Output type: `'banner'` or `'html'`
         - `'banner'`: Append comment to top of bundled code
         - `'html'`: Generate html (e.g. `license.[name].html`)
