@@ -12,6 +12,7 @@
     "prettier": "prettier --write '{src,__tests__}/**/*.js'",
     "fixtures:v3": "cd __tests__/v3/ && yarn install",
     "fixtures:v4": "cd __tests__/v4/ && yarn install",
+    "lint": "eslint",
     "jest": "jest",
     "test": "npm-run-all fixtures:* jest",
     "version": "npm run build"
@@ -39,6 +40,9 @@
     "babel-core": "^6.0.0",
     "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.1.8",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "jest": "^21.2.1",
     "memory-fs": "^0.4.1",
     "npm-run-all": "^4.1.2",
