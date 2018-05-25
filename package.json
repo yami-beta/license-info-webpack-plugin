@@ -32,7 +32,8 @@
     "testMatch": [
       "**/?(*.)(spec|test).js?(x)",
       "**/__tests__/**/?(*.)(spec|test).js?(x)"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "peerDependencies": {},
   "devDependencies": {
