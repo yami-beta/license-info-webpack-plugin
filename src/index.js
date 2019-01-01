@@ -240,15 +240,15 @@ export default class LicenseInfoWebpackPlugin {
   constructor(options) {
     const defaultOptions = {
       glob: "{LICENSE,license,License}*",
-      output: "banner",
-      outputPath: "./",
+      outputType: "banner",
       includeLicenseFile: true
     };
     this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
+    this.chunkLicenses = [];
   }
 
-  outputLicense(compilation, chunks, callback) {
+  aggregateLicense(compilation, chunks, callback) {
     const chunkIsInitial = chunk => {
       if (typeof chunk.isInitial === "function") {
         // webpack v3
@@ -282,36 +282,44 @@ export default class LicenseInfoWebpackPlugin {
 
       if (!chunkIsInitial(chunk)) return;
 
-      switch (this.opts.output) {
-        case "html": {
-          const filepath = path.join(
-            this.opts.outputPath,
-            `license-${chunk.name}.html`
-          );
-          fs.writeFileSync(
-            filepath,
-            generateHtml(uniquePkgList).join("\n"),
-            "utf-8"
-          );
-          break;
+      this.chunkLicenses.push({
+        chunk,
+        pkgs: uniquePkgList
+      });
+    });
+
+    callback();
+  }
+
+  generateLicense(compilation, cb) {
+    switch (this.opts.outputType) {
+      case "html": {
+        for (let cl of this.chunkLicenses) {
+          const html = generateHtml(cl.pkgs).join("\n");
+          compilation.assets[`license.${cl.chunk.name}.html`] = {
+            source: () => html,
+            size: () => html.length
+          };
         }
-        default: {
+        break;
+      }
+      default: {
+        for (let cl of this.chunkLicenses) {
           // Check path.extname(filename) for append comment only `.js` files
           const re = /^\.js/;
-          chunk.files.forEach(filename => {
+          cl.chunk.files.forEach(filename => {
             if (!re.test(path.extname(filename))) {
               return;
             }
             compilation.assets[filename] = new ConcatSource(
-              generateBanner(uniquePkgList),
+              generateBanner(cl.pkgs),
               compilation.assets[filename]
             );
           });
         }
       }
-    });
-
-    callback();
+    }
+    cb();
   }
 
   apply(compiler) {
@@ -323,16 +331,22 @@ export default class LicenseInfoWebpackPlugin {
         compilation.hooks.optimizeChunkAssets.tapAsync(
           plugin,
           (chunks, callback) => {
-            this.outputLicense(compilation, chunks, callback);
+            this.aggregateLicense(compilation, chunks, callback);
           }
         );
+      });
+      compiler.hooks.emit.tapAsync(plugin, (compilation, cb) => {
+        this.generateLicense(compilation, cb);
       });
     } else {
       // webpack v3
       compiler.plugin("compilation", compilation => {
         compilation.plugin("optimize-chunk-assets", (chunks, callback) => {
-          this.outputLicense(compilation, chunks, callback);
+          this.aggregateLicense(compilation, chunks, callback);
         });
+      });
+      compiler.plugin("emit", (compilation, cb) => {
+        this.generateLicense(compilation, cb);
       });
     }
   }

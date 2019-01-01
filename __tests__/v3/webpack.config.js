@@ -31,7 +31,7 @@ module.exports = {
   },
   plugins: [
     new LicenseInfoWebpackPlugin({
-      output: "banner",
+      outputType: "banner",
       includeLicenseFile: true
     }),
     new UglifyJsPlugin({
