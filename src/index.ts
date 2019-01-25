@@ -12,7 +12,18 @@ export function getLicenseFileByString(pkgPath, licenseFileGlob) {
   return licenseFile;
 }
 
-export function formatPackageInfo(pkg) {
+interface PackageInfo {
+  name: string;
+  version: string;
+  author: string;
+  license: any;
+  maintainers: any;
+  contributors: any;
+  repository: any;
+  pkgPath: string;
+  licenseFile?: string;
+}
+export function formatPackageInfo(pkg): PackageInfo {
   return {
     name: pkg.name,
     version: pkg.version,
@@ -236,7 +247,17 @@ ${pkgInfoText.trim()}
   return htmlAry;
 }
 
+interface LicenseInfoWebpackPluginOptions {
+  glob: string;
+  outputType: string;
+  includeLicenseFile: boolean;
+}
+
 export default class LicenseInfoWebpackPlugin {
+  opts: LicenseInfoWebpackPluginOptions;
+  basePath: string | null;
+  chunkLicenses: any[];
+
   constructor(options) {
     const defaultOptions = {
       glob: "{LICENSE,license,License}*",
