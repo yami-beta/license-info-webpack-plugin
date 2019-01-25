@@ -26,7 +26,7 @@ describe("license-info-webpack-plugin", () => {
     };
     const results = Utils.formatPackageInfo(target);
     expect(Object.keys(results).length).toBe(8);
-    expect(results.removed).toBe(undefined);
+    expect(results["removed"]).toBe(undefined);
   });
 
   test("getPackageJson()", () => {

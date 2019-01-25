@@ -29,14 +29,12 @@
     "plugin"
   ],
   "jest": {
-    "testMatch": [
-      "**/?(*.)(spec|test).js?(x)",
-      "**/__tests__/**/?(*.)(spec|test).js?(x)"
-    ],
+    "preset": "ts-jest",
     "testEnvironment": "node"
   },
   "peerDependencies": {},
   "devDependencies": {
+    "@types/jest": "^23.3.13",
     "@types/node": "^10.12.18",
     "@typescript-eslint/parser": "^1.1.0",
     "babel-cli": "^6.26.0",
@@ -50,6 +48,7 @@
     "memory-fs": "^0.4.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.1",
+    "ts-jest": "^23.10.5",
     "typescript": "^3.2.4"
   },
   "dependencies": {
