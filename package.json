@@ -7,9 +7,8 @@
     "lib"
   ],
   "scripts": {
-    "watch": "babel -w src/index.js -o lib/index.js",
-    "build": "NODE_ENV=production babel src/index.js -o lib/index.js",
-    "prettier": "prettier --write '{src,__tests__}/**/*.js'",
+    "watch": "tsc --watch",
+    "build": "NODE_ENV=production tsc",
     "fixtures:v3": "cd __tests__/v3/ && yarn install",
     "fixtures:v4": "cd __tests__/v4/ && yarn install",
     "lint": "eslint",
@@ -30,13 +29,17 @@
   ],
   "jest": {
     "testMatch": [
-      "**/?(*.)(spec|test).js?(x)",
-      "**/__tests__/**/?(*.)(spec|test).js?(x)"
+      "**/?(*.)(spec|test).ts?(x)",
+      "**/__tests__/**/?(*.)(spec|test).ts?(x)"
     ],
+    "preset": "ts-jest",
     "testEnvironment": "node"
   },
   "peerDependencies": {},
   "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "@types/node": "^10.12.18",
+    "@typescript-eslint/parser": "^1.1.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
@@ -47,7 +50,9 @@
     "jest": "^23.6.0",
     "memory-fs": "^0.4.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.16.1"
+    "prettier": "^1.16.1",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.4"
   },
   "dependencies": {
     "glob": "^7.1.3",

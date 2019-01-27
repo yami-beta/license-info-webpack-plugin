@@ -8,7 +8,7 @@ install:
   - yarn install --frozen-lockfile
 
 script:
-  - yarn lint src/
+  - yarn lint 'src/**/*'
   - yarn test
 
 cache: yarn
