@@ -10,5 +10,6 @@ install:
 script:
   - yarn workspace license-info-webpack-plugin lint 'src/**/*'
   - yarn workspace license-info-webpack-plugin test
+  - yarn workspace test-v4 jest
 
 cache: yarn
