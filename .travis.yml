@@ -8,7 +8,7 @@ install:
   - yarn install --frozen-lockfile
 
 script:
-  - yarn lint 'src/**/*'
-  - yarn test
+  - yarn workspace license-info-webpack-plugin lint 'src/**/*'
+  - yarn workspace license-info-webpack-plugin test
 
 cache: yarn
