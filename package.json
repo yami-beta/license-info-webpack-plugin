@@ -38,7 +38,7 @@
   "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^23.3.13",
-    "@types/node": "^10.12.20",
+    "@types/node": "^10.12.21",
     "@typescript-eslint/parser": "^1.2.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
