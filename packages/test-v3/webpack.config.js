@@ -4,15 +4,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
   entry: {
-    index: path.join(
-      __dirname,
-      "..",
-      "..",
-      "__tests__",
-      "fixtures",
-      "src",
-      "index.js"
-    )
+    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js")
   },
   output: {
     path: path.join(__dirname, "dist"),

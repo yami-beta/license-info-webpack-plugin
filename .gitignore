@@ -46,6 +46,5 @@ jspm_packages
 
 # Project
 
-/lib/
-!__tests__/fixtures/node_modules
+!fixtures/node_modules
 

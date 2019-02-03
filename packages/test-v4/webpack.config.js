@@ -5,15 +5,7 @@ module.exports = {
   mode: "production",
   context: path.join(__dirname),
   entry: {
-    index: path.join(
-      __dirname,
-      "..",
-      "..",
-      "__tests__",
-      "fixtures",
-      "src",
-      "index.js"
-    )
+    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js")
   },
   output: {
     path: path.join(__dirname, "dist"),
