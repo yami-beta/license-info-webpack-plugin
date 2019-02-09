@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "config:base",
+    ":rebaseStalePrs",
+    ":automergePatch"
+  ],
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "packageNames": ["webpack"],
+      "paths": ["packages/test-v3"],
+      "allowedVersions": "<4.0.0"
+    },
+    {
+      "packageNames": ["uglifyjs-webpack-plugin"],
+      "paths": ["packages/test-v3"],
+      "allowedVersions": "<2.0.0"
+    },
+    {
+      "packageNames": ["webpack"],
+      "paths": ["packages/test-v4"],
+      "allowedVersions": "<5.0.0"
+    }
+  ]
+}
