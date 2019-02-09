@@ -33,7 +33,7 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.13",
+    "@types/jest": "^23.3.14",
     "@types/node": "^10.12.20",
     "@typescript-eslint/parser": "^1.2.0",
     "eslint": "^5.12.1",
