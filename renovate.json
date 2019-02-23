@@ -24,6 +24,10 @@
       "packageNames": ["webpack"],
       "paths": ["packages/test-v4"],
       "allowedVersions": "<5.0.0"
+    },
+    {
+      "paths": ["fixtures"],
+      "enabled": false
     }
   ]
 }
