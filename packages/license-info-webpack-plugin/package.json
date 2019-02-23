@@ -25,10 +25,6 @@
     "plugin"
   ],
   "jest": {
-    "testMatch": [
-      "**/?(*.)(spec|test).ts?(x)",
-      "**/__tests__/**/?(*.)(spec|test).ts?(x)"
-    ],
     "preset": "ts-jest",
     "testEnvironment": "node"
   },
