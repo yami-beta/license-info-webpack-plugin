@@ -7,6 +7,10 @@
   "rangeStrategy": "bump",
   "packageRules": [
     {
+      "packageNames": ["jest", "@types/jest", "ts-jest"],
+      "groupName": "jest packages"
+    },
+    {
       "packageNames": ["webpack"],
       "paths": ["packages/test-v3"],
       "allowedVersions": "<4.0.0"
