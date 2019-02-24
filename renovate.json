@@ -5,6 +5,9 @@
     ":automergePatch"
   ],
   "rangeStrategy": "bump",
+  "ignorePaths": [
+    "fixtures"
+  ],
   "packageRules": [
     {
       "packageNames": ["jest", "@types/jest", "ts-jest"],
@@ -24,10 +27,6 @@
       "packageNames": ["webpack"],
       "paths": ["packages/test-v4"],
       "allowedVersions": "<5.0.0"
-    },
-    {
-      "paths": ["fixtures"],
-      "enabled": false
     }
   ]
 }
