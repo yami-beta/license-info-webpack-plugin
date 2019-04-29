@@ -15,7 +15,7 @@
     "license-info-webpack-plugin": "^2.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.11",
+    "@types/jest": "^24.0.12",
     "jest": "^24.5.0",
     "ts-jest": "^24.0.2",
     "typescript": "^3.3.4000"
