@@ -1,0 +1,30 @@
+name: ci
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: |
+          yarn workspace license-info-webpack-plugin lint 'src/**/*'
+      - name: Test
+        run: |
+          yarn workspace license-info-webpack-plugin test
+          yarn workspace license-info-webpack-plugin build
+          yarn workspace test-v4 jest
+          yarn workspace test-v3 jest
