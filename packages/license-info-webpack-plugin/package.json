@@ -9,7 +9,6 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "NODE_ENV=production tsc",
-    "lint": "eslint",
     "test": "jest",
     "version": "npm run build"
   },
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^10.14.22",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
