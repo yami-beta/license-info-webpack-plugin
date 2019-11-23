@@ -1,4 +1,12 @@
 {
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "lint": "eslint --ext ts,js .",
+    "build:core": "yarn workspace license-info-webpack-plugin build",
+    "test:core": "yarn workspace license-info-webpack-plugin test",
+    "test:v3": "yarn workspace test-v3 jest",
+    "test:v4": "yarn workspace test-v4 jest",
+    "test": "npm-run-all -s test:core build:* -p test:v*"
+  }
 }

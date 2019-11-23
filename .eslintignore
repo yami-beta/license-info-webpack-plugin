@@ -1,0 +1,5 @@
+!.eslintrc.js
+!.prettierrc.js
+node_modules/
+lib/
+fixtures/
