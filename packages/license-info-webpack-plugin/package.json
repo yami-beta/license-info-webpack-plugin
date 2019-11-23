@@ -1,6 +1,6 @@
 {
   "name": "license-info-webpack-plugin",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Making a list of package's LICENSE information for webpack",
   "main": "./lib/index.js",
   "files": [
