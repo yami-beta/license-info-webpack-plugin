@@ -151,7 +151,7 @@ ${licenseStr}
 ${indent}`;
   });
   return `/*!
-${banners.join("\n")}
+${banners.join("\n").replace(/\*\//g , '* /')}
  */
 `;
 }
