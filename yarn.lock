@@ -1371,10 +1371,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
   integrity sha512-Il2DtDVRGDcqjDtE+rF8iqg1CArehSK84HZJCT7AMITlyXRBpuPhqGLDQMowraqqu1coEaimg4ZOqggt6L6L+A==
 
-"@types/node@^10.17.25":
-  version "10.17.25"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.25.tgz#64f64cd3e8641e8163c81045e545d2825d300e37"
-  integrity sha512-EWPw3jDB0jip4HafDkoezNOwG00TtVZ1TOe74MaxIBWgpyM60UF/LXzFVx9+8AdSYNNOPgx7TuJoRmgnhHZ/7g==
+"@types/node@^10.17.26":
+  version "10.17.26"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.26.tgz#a8a119960bff16b823be4c617da028570779bcfd"
+  integrity sha512-myMwkO2Cr82kirHY8uknNRHEVtn0wV3DTQfkrjx17jmkstDRZ24gNUdl8AHXVyVclTYI/bNjgTPTAWvWLqXqkw==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
