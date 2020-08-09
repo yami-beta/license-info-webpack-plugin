@@ -31,7 +31,7 @@ function formatPackageInfo(pkg): PackageInfo {
     maintainers: pkg.maintainers,
     contributors: pkg.contributors,
     repository: pkg.repository,
-    pkgPath: pkg.pkgPath
+    pkgPath: pkg.pkgPath,
   };
 }
 
@@ -58,7 +58,7 @@ function getPackagePath(modulePath) {
 }
 
 function filterNodeModules(modules) {
-  return modules.filter(mod => {
+  return modules.filter((mod) => {
     if (!mod.resource) return false;
     return mod.resource.includes("node_modules");
   });
@@ -66,14 +66,14 @@ function filterNodeModules(modules) {
 
 function generateBanner(modules) {
   const indent = " *";
-  const banners = Object.keys(modules).map(pkgId => {
+  const banners = Object.keys(modules).map((pkgId) => {
     const pkg = modules[pkgId];
     let licenseStr = `${indent}`;
     if (pkg.licenseFile) {
       licenseStr = `${indent}\n`;
       licenseStr += pkg.licenseFile
         .split(/\n/)
-        .map(line => {
+        .map((line) => {
           if (line === "") return indent;
           return `${indent}   ${line}`;
         })
@@ -112,7 +112,7 @@ function generateBanner(modules) {
     }
     if (pkg.maintainers && Array.isArray(pkg.maintainers)) {
       pkgInfoText += `\n${indent}   maintainers:`;
-      pkg.maintainers.forEach(m => {
+      pkg.maintainers.forEach((m) => {
         switch (typeof m) {
           case "object": {
             pkgInfoText += `\n${indent}     ${m.name}${
@@ -129,7 +129,7 @@ function generateBanner(modules) {
     }
     if (pkg.contributors && Array.isArray(pkg.contributors)) {
       pkgInfoText += `\n${indent}   contributors:`;
-      pkg.contributors.forEach(c => {
+      pkg.contributors.forEach((c) => {
         switch (typeof c) {
           case "object": {
             pkgInfoText += `\n${indent}     ${c.name}${
@@ -157,7 +157,7 @@ ${banners.join("\n").replace(/\*\//g, "* /")}
 }
 
 function generateHtml(modules) {
-  const htmlAry = Object.keys(modules).map(pkgId => {
+  const htmlAry = Object.keys(modules).map((pkgId) => {
     const pkg = modules[pkgId];
     let licenseStr = "";
     if (pkg.licenseFile) {
@@ -197,7 +197,7 @@ function generateHtml(modules) {
       pkgInfoText += `
 <dt>maintainers</dt>
 <dd><ul>`;
-      pkg.maintainers.forEach(m => {
+      pkg.maintainers.forEach((m) => {
         switch (typeof m) {
           case "object": {
             pkgInfoText += `<li>${m.name}${
@@ -217,7 +217,7 @@ function generateHtml(modules) {
       pkgInfoText += `
 <dt>contributors</dt>
 <dd><ul>`;
-      pkg.contributors.forEach(c => {
+      pkg.contributors.forEach((c) => {
         switch (typeof c) {
           case "object": {
             pkgInfoText += `<li>${c.name}${
@@ -253,5 +253,5 @@ export {
   getPackagePath,
   filterNodeModules,
   generateBanner,
-  generateHtml
+  generateHtml,
 };
