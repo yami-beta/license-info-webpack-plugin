@@ -4,6 +4,7 @@
     "module": "commonjs",
     "declaration": true,
     "lib": ["es2018"],
+    "outDir": "lib",
     "noUnusedLocals": true,
     "esModuleInterop": true
   }

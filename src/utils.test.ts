@@ -10,12 +10,12 @@ import {
 
 test("getLicenseFileByString()", () => {
   const results = getLicenseFileByString(
-    `${__dirname}/../../../`,
+    `${__dirname}/../`,
     "{LICENSE,license,License}*"
   );
   expect(results.split(/\n/)[0]).toBe("MIT License");
 
-  const error = getLicenseFileByString(`${__dirname}/../../../`, "license*");
+  const error = getLicenseFileByString(`${__dirname}/../`, "license*");
   expect(error).toBe(null);
 });
 

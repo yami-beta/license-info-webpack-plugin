@@ -1,11 +1,11 @@
 const path = require("path");
-const LicenseInfoWebpackPlugin = require("license-info-webpack-plugin").default;
+const LicenseInfoWebpackPlugin = require("../lib").default;
 
 module.exports = {
   mode: "production",
   context: path.join(__dirname),
   entry: {
-    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js"),
+    index: path.join(__dirname, "..", "fixtures", "src", "index.js"),
   },
   output: {
     path: path.join(__dirname, "dist"),

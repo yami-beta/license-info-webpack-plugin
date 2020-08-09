@@ -1,10 +1,10 @@
 const path = require("path");
-const LicenseInfoWebpackPlugin = require("license-info-webpack-plugin").default;
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const LicenseInfoWebpackPlugin = require("../lib").default;
 
 module.exports = {
   entry: {
-    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js"),
+    index: path.join(__dirname, "..", "fixtures", "src", "index.js"),
   },
   output: {
     path: path.join(__dirname, "dist"),
