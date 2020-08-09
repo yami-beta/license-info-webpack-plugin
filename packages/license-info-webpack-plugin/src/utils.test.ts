@@ -5,7 +5,7 @@ import {
   getPackagePath,
   filterNodeModules,
   generateBanner,
-  generateHtml
+  generateHtml,
 } from "./utils";
 
 test("getLicenseFileByString()", () => {
@@ -29,7 +29,7 @@ test("formatPackageInfo()", () => {
     contributors: "contributors",
     repository: "repository",
     pkgPath: "pkgPath",
-    removed: "removed"
+    removed: "removed",
   };
   const results = formatPackageInfo(target);
   expect(Object.keys(results).length).toBe(8);
@@ -59,7 +59,7 @@ test("filterNodeModules()", () => {
   const modules = [
     { resource: "/dev/node_modules/foo/index.js" },
     { resource: "/dev/index.js" },
-    { resource: "/dev/node_modules/foo/node_modules/bar/index.js" }
+    { resource: "/dev/node_modules/foo/node_modules/bar/index.js" },
   ];
   const results = filterNodeModules(modules);
   expect(results.length).toBe(2);
@@ -76,17 +76,17 @@ const withoutLicensePkg = {
   author: "author",
   repository: {
     type: "git",
-    url: "https://github.com/yami-beta/license-info-webpack-plugin"
+    url: "https://github.com/yami-beta/license-info-webpack-plugin",
   },
   maintainers: [
     { name: "m1", email: "m1@example.com", url: "m1.example.com" },
-    { name: "m2", email: "m2@example.com", url: "m2.example.com" }
+    { name: "m2", email: "m2@example.com", url: "m2.example.com" },
   ],
   contributors: [
     { name: "c1", email: "c1@example.com", url: "c1.example.com" },
-    { name: "c2", email: "c2@example.com", url: "c2.example.com" }
+    { name: "c2", email: "c2@example.com", url: "c2.example.com" },
   ],
-  license: "MIT"
+  license: "MIT",
 };
 const withLicensePkg = {
   name: "name",
@@ -94,22 +94,22 @@ const withLicensePkg = {
   author: "author",
   repository: {
     type: "git",
-    url: "https://github.com/yami-beta/license-info-webpack-plugin"
+    url: "https://github.com/yami-beta/license-info-webpack-plugin",
   },
   maintainers: [
     { name: "m1", email: "m1@example.com", url: "m1.example.com" },
-    { name: "m2", email: "m2@example.com", url: "m2.example.com" }
+    { name: "m2", email: "m2@example.com", url: "m2.example.com" },
   ],
   contributors: [
     { name: "c1", email: "c1@example.com", url: "c1.example.com" },
-    { name: "c2", email: "c2@example.com", url: "c2.example.com" }
+    { name: "c2", email: "c2@example.com", url: "c2.example.com" },
   ],
   license: "MIT",
   licenseFile: `MIT License
 
 Copyright (c) 2016 yami_beta
 
-Permission is hereby granted, free of charge, to any person obtaining a copy`
+Permission is hereby granted, free of charge, to any person obtaining a copy`,
 };
 test("generateBanner() without license file", () => {
   const pkg = withoutLicensePkg;
@@ -128,7 +128,7 @@ test("generateBanner() without license file", () => {
  */
 `;
   const results = generateBanner({
-    [`${pkg.name}@${pkg.version}`]: pkg
+    [`${pkg.name}@${pkg.version}`]: pkg,
   });
   expect(results).toBe(expected);
 });
@@ -156,7 +156,7 @@ test("generateBanner() with license file", () => {
  */
 `;
   const results = generateBanner({
-    [`${pkg.name}@${pkg.version}`]: pkg
+    [`${pkg.name}@${pkg.version}`]: pkg,
   });
   expect(results).toBe(expected);
 });

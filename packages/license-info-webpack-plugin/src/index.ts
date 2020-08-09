@@ -7,7 +7,7 @@ import {
   getPackagePath,
   filterNodeModules,
   generateBanner,
-  generateHtml
+  generateHtml,
 } from "./utils";
 
 interface LicenseInfoWebpackPluginOptions {
@@ -25,7 +25,7 @@ export default class LicenseInfoWebpackPlugin {
     const defaultOptions = {
       glob: "{LICENSE,license,License}*",
       outputType: "banner",
-      includeLicenseFile: true
+      includeLicenseFile: true,
     };
     this.opts = Object.assign({}, defaultOptions, options);
     this.basePath = null;
@@ -33,7 +33,7 @@ export default class LicenseInfoWebpackPlugin {
   }
 
   aggregateLicense(compilation, chunks, callback) {
-    const chunkIsInitial = chunk => {
+    const chunkIsInitial = (chunk) => {
       if (typeof chunk.isInitial === "function") {
         // webpack v3
         return chunk.isInitial();
@@ -42,11 +42,11 @@ export default class LicenseInfoWebpackPlugin {
       return chunk.canBeInitial();
     };
 
-    chunks.forEach(chunk => {
+    chunks.forEach((chunk) => {
       const modules = filterNodeModules(
-        Array.from(chunk.modulesIterable, mod => mod)
+        Array.from(chunk.modulesIterable, (mod) => mod)
       );
-      const pkgList = modules.map(mod => {
+      const pkgList = modules.map((mod) => {
         const pkgPath = getPackagePath(mod.resource);
         const pkg = getPackageJson(pkgPath);
         pkg.pkgPath = pkgPath;
@@ -59,7 +59,7 @@ export default class LicenseInfoWebpackPlugin {
         return pkgInfo;
       });
       let uniquePkgList = {};
-      pkgList.forEach(pkg => {
+      pkgList.forEach((pkg) => {
         if (uniquePkgList[`${pkg.name}@${pkg.version}`]) return;
         uniquePkgList[`${pkg.name}@${pkg.version}`] = pkg;
       });
@@ -68,7 +68,7 @@ export default class LicenseInfoWebpackPlugin {
 
       this.chunkLicenses.push({
         chunk,
-        pkgs: uniquePkgList
+        pkgs: uniquePkgList,
       });
     });
 
@@ -82,7 +82,7 @@ export default class LicenseInfoWebpackPlugin {
           const html = generateHtml(cl.pkgs).join("\n");
           compilation.assets[`license.${cl.chunk.name}.html`] = {
             source: () => html,
-            size: () => html.length
+            size: () => html.length,
           };
         }
         break;
@@ -91,7 +91,7 @@ export default class LicenseInfoWebpackPlugin {
         for (let cl of this.chunkLicenses) {
           // Check path.extname(filename) for append comment only `.js` files
           const re = /^\.js/;
-          cl.chunk.files.forEach(filename => {
+          cl.chunk.files.forEach((filename) => {
             if (!re.test(path.extname(filename))) {
               return;
             }
@@ -111,7 +111,7 @@ export default class LicenseInfoWebpackPlugin {
 
     if (compiler.hooks) {
       const plugin = { name: "license-info-webpack-plugin" };
-      compiler.hooks.compilation.tap(plugin, compilation => {
+      compiler.hooks.compilation.tap(plugin, (compilation) => {
         compilation.hooks.optimizeChunkAssets.tapAsync(
           plugin,
           (chunks, callback) => {
@@ -124,7 +124,7 @@ export default class LicenseInfoWebpackPlugin {
       });
     } else {
       // webpack v3
-      compiler.plugin("compilation", compilation => {
+      compiler.plugin("compilation", (compilation) => {
         compilation.plugin("optimize-chunk-assets", (chunks, callback) => {
           this.aggregateLicense(compilation, chunks, callback);
         });

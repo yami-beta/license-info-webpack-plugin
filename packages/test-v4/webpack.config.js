@@ -5,14 +5,14 @@ module.exports = {
   mode: "production",
   context: path.join(__dirname),
   entry: {
-    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js")
+    index: path.join(__dirname, "..", "..", "fixtures", "src", "index.js"),
   },
   output: {
     path: path.join(__dirname, "dist"),
-    filename: "[name].js"
+    filename: "[name].js",
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
   },
   module: {
     rules: [
@@ -22,18 +22,18 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-env"]
-            }
-          }
+              presets: ["@babel/preset-env"],
+            },
+          },
         ],
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
     new LicenseInfoWebpackPlugin({
       outputType: "banner",
-      includeLicenseFile: true
-    })
-  ]
+      includeLicenseFile: true,
+    }),
+  ],
 };

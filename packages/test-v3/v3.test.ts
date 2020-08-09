@@ -2,7 +2,7 @@ import memoryfs from "memory-fs";
 import licenseComment from "../../fixtures/license";
 
 describe("webpack v3", () => {
-  test("when license-info-webpack-plugin is used", done => {
+  test("when license-info-webpack-plugin is used", (done) => {
     const webpack = require("webpack");
     const webpackConfig = require("./webpack.config.js");
     const expectedBanner = licenseComment();
