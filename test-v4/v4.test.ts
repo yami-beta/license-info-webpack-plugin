@@ -1,4 +1,5 @@
-import memoryfs from "memory-fs";
+import path from "path";
+import { createFsFromVolume, Volume } from "memfs";
 import licenseComment from "../fixtures/license";
 
 describe("webpack v4", () => {
@@ -7,7 +8,8 @@ describe("webpack v4", () => {
     const webpackConfig = require("./webpack.config.js");
     const expectedBanner = licenseComment();
     const compiler = webpack(webpackConfig);
-    compiler.outputFileSystem = new memoryfs();
+    compiler.outputFileSystem = createFsFromVolume(new Volume());
+    compiler.outputFileSystem.join = path.join.bind(path);
 
     compiler.run((err, stats) => {
       expect(err).toBeFalsy();
