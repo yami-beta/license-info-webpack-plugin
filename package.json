@@ -47,7 +47,7 @@
     "typescript": "^3.9.9"
   },
   "dependencies": {
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "webpack-sources": "^1.4.3"
   }
 }
