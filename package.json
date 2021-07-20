@@ -48,6 +48,6 @@
   },
   "dependencies": {
     "glob": "^7.1.7",
-    "webpack-sources": "^1.4.3"
+    "webpack-sources": "^2.3.1"
   }
 }
